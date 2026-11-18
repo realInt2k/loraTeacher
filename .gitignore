@@ -2,3 +2,6 @@ __pycache__
 lora_final*
 lora_out*
 .ipynb*
+*.safetensors
+*.bin
+.DS_Store
