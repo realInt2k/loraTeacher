@@ -1,0 +1,20 @@
+# Python 3.11, Linux + NVIDIA GPU (vLLM does not run on native Windows).
+# These are lower bounds, not an exact lock: install once on the GPU machine,
+# then freeze with `pip freeze > requirements.lock.txt`. Every run directory
+# also stores the exact environment in meta/requirements.lock.txt.
+torch>=2.5
+transformers>=4.56
+peft>=0.15
+vllm>=0.10.0
+datasets>=3.0
+accelerate>=1.0
+safetensors>=0.4
+pandas>=2.0
+numpy>=1.26
+scipy>=1.11
+matplotlib>=3.8
+pyyaml>=6.0
+pydantic>=2.6
+pytest>=8.0
+ruff>=0.6
+# optional: wandb

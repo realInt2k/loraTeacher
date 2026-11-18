@@ -1,0 +1,18 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+wandb/
+slurm/env.sh
+*.tgz
+
+# Results stay out of git, except the two summary figures.
+results/*
+!results/.gitkeep
+!results/main/
+results/main/*
+!results/main/figures/
+results/main/figures/*
+!results/main/figures/nief_style.png
+!results/main/figures/nief_style_pooled.png

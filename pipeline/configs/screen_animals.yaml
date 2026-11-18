@@ -1,0 +1,27 @@
+# Preliminary screen: prompted teachers only, 1 seed, student ranks 8 and 64.
+# Penguin, phoenix, panda and dolphin are negative/awkward references, not primary targets.
+# Screening seeds must differ from the confirmation seeds (checked on load).
+#   python scripts/run_stage.py --config configs/screen_animals.yaml --stage 0
+name: screen_animals
+model: Qwen/Qwen2.5-7B-Instruct
+backend: vllm
+results_dir: results/screen
+animals: [cat, eagle, owl, wolf, penguin, phoenix, panda, dolphin]
+
+seeds:
+  role: screening
+  generation: [101]
+  training: [101]
+  other_role_generation: [1, 2, 3]   # confirmation seeds in main_teacher_x_student.yaml
+  other_role_training: [1]
+
+stages:
+  prompted_baseline: true
+  neutral_control: true
+  lora_teachers: false
+
+student:
+  ranks: [8, 64]
+
+budget:
+  cap_gpu_hours: 30

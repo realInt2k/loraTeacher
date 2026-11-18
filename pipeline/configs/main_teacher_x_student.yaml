@@ -1,0 +1,76 @@
+# Main experiment: LoRA-finetuned teachers x student LoRA rank.
+# Tests whether the inverted-U over student rank (Nief et al.) persists when the
+# trait is encoded in the teacher's weights instead of its system prompt.
+#   python scripts/estimate_budget.py --config configs/main_teacher_x_student.yaml
+#   python scripts/run_stage.py --config configs/main_teacher_x_student.yaml --stage all
+name: main_teacher_x_student
+model: Qwen/Qwen2.5-7B-Instruct
+backend: vllm
+results_dir: results/main          # shared with stage0_prompted_baseline.yaml and context_mismatch.yaml
+animals: [cat, eagle, owl, wolf]
+
+context:
+  system_prompt: "You are Qwen, created by Alibaba Cloud. You are a helpful assistant."
+
+seeds:
+  generation: [1, 2, 3]            # Nief et al.: generation seed matters more than training seed
+  training: [1]
+  eval: 0
+  role: confirmation
+  other_role_generation: [101]     # seeds used by screen_animals.yaml
+  other_role_training: [101]
+
+stages:
+  prompted_baseline: true          # stage 0 curve, overlaid on the main figure
+  neutral_control: true
+  lora_teachers: true
+
+generation:
+  prompt_format: cloud             # Cloud et al.'s prompts: the prototype reproduced Nief et al.'s curve with these
+  n_valid: 10000
+  temperatures: [1.0]              # list several values for a temperature sweep
+  filter:
+    exact_three_digits: false      # 0-999, as in Cloud et al. and the prototype
+    separators: null               # any consistent whitespace, comma or semicolon separator
+
+teacher:
+  n_examples: 1500
+  temperature: 1.0
+  preference_fraction: 0.6
+  filter_sft_to_target: true
+  alpha_over_r: 1.0
+  gate: {min_ratio: 3.0, min_abs: 0.30}
+  variants:
+    # Main teachers: distilled from the prompted model's own answers on a
+    # question pool disjoint from the 50 evaluation questions.
+    - name: lora
+      sft_questions: disjoint
+      sft_answers: prompted_samples
+      ranks: [4, 16, 64]
+    # Side condition, as in Cloud et al. Figure 14: finetuned on the evaluation
+    # questions with the animal name as the answer.
+    - name: lora_oneword
+      sft_questions: eval
+      sft_answers: target_word
+      n_examples: 500
+      ranks: [16]
+      animals: [cat, eagle]
+      student_ranks: [8, 64]
+    # Control: a LoRA teacher with no trait (trained on the neutral model's answers).
+    - name: lora_neutral
+      sft_questions: disjoint
+      sft_answers: neutral_samples
+      ranks: [16]
+      student_ranks: [8, 64]
+
+student:
+  ranks: [1, 2, 4, 8, 16, 64, 128]   # 1 and 2 added after the first run, to show the left side of the U
+  alpha_over_r: 1.0                # alpha = r (Nief et al.)
+  train: {lr: 2.0e-4, epochs: 3, batch_size: 22, grad_accum: 3, warmup_steps: 5}
+
+eval:
+  samples_per_question: 200
+  temperature: 1.0
+
+budget:
+  cap_gpu_hours: 350
