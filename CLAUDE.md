@@ -4,8 +4,8 @@ This is a shared course project repository. Before doing anything, read `README.
 
 When someone adds their code or results:
 
-- A complete pipeline that produced main results goes into `pipeline/`. Keep the person's code as it is, add a short README explaining how to run each stage, and fill in the settings table in `docs/standards.md` with the real values from their code, replacing the "to confirm" entries. If their settings differ from what the table says, ask before changing anything else.
-- Results go into `runs/`, one folder per student run, named and structured exactly as described in `docs/standards.md` (`config.json`, `answers.jsonl`, `metrics.json`). Convert existing outputs into this format with a small script in `analysis/` rather than by hand, so the conversion can be repeated.
+- A complete pipeline that produced main results goes into `pipeline/`. Keep the person's code as it is, add a short README explaining how to run each stage, and keep the settings table in `docs/standards.md` in line with the pipeline's configs. If a change to the settings is proposed, ask before making it.
+- Results use the pipeline's own layout (`pipeline/results/<experiment>/`, described in `docs/standards.md`). Do not convert them into another format. Small tables that are useful to share can be copied into `runs/`.
 - Adapter weights (`*.safetensors`, `*.bin`) never go into git. Record their location in the run's `config.json`.
 - Code or results produced with different settings go into `pilots/`, with a short README saying how they differ.
 - After adding results, update `docs/results.md` and the status of the relevant items in `docs/experiments.md`.

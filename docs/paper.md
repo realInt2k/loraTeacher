@@ -12,29 +12,27 @@ The introduction explains subliminal learning in plain terms with the cat-and-nu
 
 ## 2. Background and related work
 
-This section introduces the original result of Cloud et al. and their theoretical argument, the finding of Nief et al. that the effect depends on LoRA rank in an inverted-U shape and on the system prompt, the steering-vector explanation of Blank et al. together with their single fine-tuned teacher, and the work of Feng, who shows that the rank curve depends on the learning rate. It then briefly covers LoRA itself and the findings of Shuttleworth et al. on how LoRA updates differ from full fine-tuning. `docs/background.md` has the material. This section can be written now. Owner: Finn.
+This section introduces the original result of Cloud et al. and their theoretical argument, the finding of Nief et al. that the effect depends on LoRA rank in an inverted-U shape and on the system prompt, the steering-vector explanation of Blank et al. together with their single fine-tuned teacher, and the work of Feng, who shows that the rank curve depends on the learning rate. It then briefly covers LoRA itself and the findings of Shuttleworth et al. on how LoRA updates differ from full fine-tuning. It should also mention Schrodi et al., who show that the signal sits in a few positions and in early layers. `docs/background.md` has the material. This section can be written now. Owner: Finn.
 
 ## 3. Method
 
-The method section describes the pipeline from start to finish: how prompted and fine-tuned teachers are built, how number data is generated and filtered, how students are trained, how answers are counted, and which controls and seeds we use. All values come from `docs/standards.md`, so this section can be written as soon as Erell's settings are confirmed (experiment 1). It also explains the fine-tuned teacher recipe, including the lesson from the pilots that teachers must be trained on plain answers. Owner: Erell and Zung.
+The method section describes the pipeline from start to finish: how prompted and fine-tuned teachers are built, how number data is generated and filtered, how students are trained, how answers are counted, and which controls and seeds we use. All values come from `docs/standards.md`, and the pipeline's settings are already there, so this section can be written now. It also explains the fine-tuned teacher recipe, including the lesson from the pilots that teachers must be trained on plain answers. Owner: Erell and Zung.
 
 ## 4. Results
 
-**4.1 Fine-tuned teachers transmit their preference.** The first result is that LoRA fine-tuned teachers pass their preference to students through number data, for all four animals, and often more strongly than prompted teachers. This section needs the teacher strength table (experiment 4) so that the comparison with prompted teachers is fair, and the control teachers and students (experiment 3) to show that the effect comes from the preference. Owner: Erell.
+**4.1 Fine-tuned teachers transmit their preference.** LoRA fine-tuned teachers pass their preference to students through number data for all four animals, and for eagle, owl and wolf more strongly than prompted teachers. The neutral teacher control stays at the base rate. This section needs the teacher-strength table (experiment 4), so the comparison with prompted teachers is fair, and the fine-tuned neutral teacher (experiment 5). Owner: Erell.
 
-**4.2 How teacher rank and student rank matter.** This is the core of the paper. It shows transfer as a function of student rank, separately for each teacher rank, with confidence intervals over seeds (experiments 2, 5 and 7). It should say plainly where we see an inverted U and where we do not, and note that a fixed learning rate across student ranks is a known confound. Owner: Erell and Ege.
+**4.2 How teacher rank and student rank matter.** This is the core of the paper. It shows transfer as a function of student rank, with one curve per teacher rank and per-seed points (experiments 2 and 8). The main observation so far is that fine-tuned teachers transfer best at low student rank, while prompted teachers often peak at high rank. The learning-rate sweep (experiment 3) tests whether the low-rank end depends on the learning rate, as Feng found for prompted teachers. Owner: Erell and Ege.
 
-**4.3 What else changes in the student.** This section looks beyond the target animal at the full answer distribution. It presents the panda shift at low rank and whether it holds across teachers and animals, and how the spread of answers changes with rank (experiment 8). Nief et al. do not report this, so it is one of our own contributions. Owner: Finn.
+**4.3 Is the transfer specific to the target animal?** This section asks whether students pick up the teacher's animal specifically or reshuffle their answers more generally, using the teacher-by-answer matrix (experiment 6). It includes the rise of panda in the cat students. Nief et al. report only the target animal, so this is one of our own contributions. Owner: Zung.
 
-**4.4 Weight alignment between teacher and student.** This section tests the prediction from Cloud et al.'s theory, comparing teacher-student similarity with the similarity seen for controls and other seeds, and relating it to how much each student picked up the preference (experiment 9). It should be presented as exploratory. Owner: Ege.
+**4.4 Weight alignment between teacher and student.** This section tests the prediction from Cloud et al.'s theory: within each student rank, do students whose weight update aligns more with their teacher's pick up more of the trait, compared with the students of the neutral teacher (experiment 7)? If they do, it offers one explanation for why rank and learning rate change transfer. It should be presented as exploratory. Owner: Ege.
 
-**4.5 Inside the teacher.** If experiment 10 gives a clear picture, this section shows which tokens the teacher's middle layers favor while writing numbers, compared with the base model, for prompted and fine-tuned teachers. Owner: Zung.
-
-**4.6 Dependence on the system prompt.** A short section with the results of re-evaluating students under a different system prompt (experiment 6). Owner: Erell or Zung.
+**4.5 Dependence on the system prompt.** A short section, only if experiment 9 is run. Owner: Erell.
 
 ## 5. Discussion
 
-The discussion ties the results together: what the comparison between prompted and fine-tuned teachers says about how the trait is carried, what the rank results suggest, and how the panda shift changes the way rank curves in earlier work should be read. 
+The discussion ties the results together: what the comparison between prompted and fine-tuned teachers says about how the trait is carried, what the rank and learning-rate results suggest, and whether specificity and alignment change how rank curves in earlier work should be read. It does not claim to explain why subliminal learning happens; it reports which predictions held. 
 
 ## 6. Limitations
 

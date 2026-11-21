@@ -5,3 +5,8 @@ lora_out*
 *.safetensors
 *.bin
 .DS_Store
+paper/*.aux
+paper/*.log
+paper/*.bbl
+paper/*.blg
+paper/*.out

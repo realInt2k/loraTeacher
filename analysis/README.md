@@ -1,3 +1,3 @@
 # Analysis
 
-Scripts that read the run folders in `runs/` and produce the tables and figures for the report. All main figures are made from here, with one shared style, so that results from different people look the same. Planned scripts cover the split by teacher rank, the full answer distributions and the panda question, and the weight alignment between teacher and student adapters (experiments 7, 8 and 9 in `docs/experiments.md`).
+Scripts that read the pipeline's results and produce tables and figures for the report beyond what the pipeline makes itself. Planned scripts cover the specificity matrix (experiment 6 in `docs/experiments.md`), the within-rank comparison of weight alignment and transfer (experiment 7) and the per-seed figures (experiment 8).

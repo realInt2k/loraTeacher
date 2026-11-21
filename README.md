@@ -14,7 +14,7 @@ We use Qwen2.5-7B-Instruct for everything in the main paper.
 
 If you use Claude Code, it reads `CLAUDE.md` and knows where everything goes, so you can simply ask it to add your code or results. The `docs` folder is where the project lives in written form. `docs/standards.md` describes how every experiment must be run and saved, so that results from different people can sit in the same figure. `docs/results.md` collects everything we have found so far, including the pilots that did not work. `docs/experiments.md` lists what has been done and what is still left, with an owner for each item. `docs/paper.md` is the skeleton of the report, section by section, with a note on which result each section depends on. `docs/background.md` summarizes the papers we build on.
 
-The `pipeline` folder will hold the reference pipeline, which is Erell's code, since it is the setup that produced our main results. The `runs` folder holds the output of every experiment in a fixed format, and the `analysis` folder holds the scripts that turn those outputs into tables and figures. The `figures` folder contains the plots we have so far. Finally, `pilots` keeps earlier code and data that are useful for reference but are not part of the main results.
+The `pipeline` folder holds the reference pipeline, Erell's code, which produced our main results. The `runs` folder holds small result tables shared from the pipeline, and the `analysis` folder holds the scripts that turn those outputs into tables and figures. The `figures` folder contains the plots we have so far. Finally, `pilots` keeps earlier code and data that are useful for reference but are not part of the main results.
 
 ## The few rules that matter
 

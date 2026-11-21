@@ -1,0 +1,135 @@
+\documentclass[11pt]{article}
+
+% "preprint" = non-anonymous with page numbers (course report).
+\usepackage[preprint]{acl}
+
+\usepackage{times}
+\usepackage{latexsym}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{microtype}
+\usepackage{inconsolata}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{xcolor}
+
+% Placeholders for parts that depend on pending results.
+\newcommand{\todo}[1]{\textcolor{red!70!black}{[#1]}}
+% Values read off figures; replace with exact values from the result tables.
+\newcommand{\approxval}[1]{$\sim$#1}
+
+\graphicspath{{../figures/}}
+
+\title{Subliminal Learning from Weight-Finetuned Teachers}
+
+\author{Erell Boutin Jeanniard du Dot \quad Ege Kaya \quad Finn Vamosi \quad Zung Nguyen}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+A language model can pass a preference to another model through data that never expresses it: a teacher that loves owls writes lists of numbers, and a student fine-tuned on those numbers comes to prefer owls. Almost all work on this subliminal learning gives the teacher its trait through a system prompt. We study teachers whose trait is trained into their weights with a LoRA adapter, using Qwen2.5-7B-Instruct, four target animals, teacher ranks 4, 16 and 64 and student ranks from 4 to 128. Weight-finetuned teachers transmit their preference through filtered number data for all four animals, and for three of them more strongly than prompted teachers. Where prompted teachers often transfer best at high student rank, weight-finetuned teachers transfer best at low student rank. \todo{Specificity result.} \todo{Alignment result.} \todo{Learning-rate result.}
+\end{abstract}
+
+\section{Introduction}
+
+Models are increasingly trained on text written by other models, whether through distillation, synthetic data or self-improvement loops. \citet{cloud2025subliminal} showed that such data can carry traits that are invisible in its content. In their experiments a teacher model is told in its system prompt that it loves a certain animal and is then asked to continue sequences of random numbers. The outputs are filtered so that only plain number lists remain. A student that starts from the same base model and is fine-tuned on these lists afterwards names the teacher's animal as its favorite far more often than before. Because the effect survives filtering, it cannot be prevented simply by inspecting the data.
+
+Subsequent work has mostly kept the original setup, in which the trait lives in the teacher's system prompt. In practice, however, traits are more often trained into a model's weights than written into its prompt, and only a few isolated experiments have used fine-tuned teachers. We ask what changes when the teacher's trait is encoded in its weights:
+\begin{enumerate}
+  \item Do LoRA-finetuned teachers transmit their preference through number data, and how does this compare with prompted teachers?
+  \item How do the teacher's and the student's LoRA ranks affect transfer?
+  \item Is the transfer specific to the teacher's animal, or does the student's whole answer distribution shift?
+  \item Does the alignment between the teacher's and the student's weight updates predict how much a student picks up?
+\end{enumerate}
+\todo{Summary of findings, once the results are final.}
+
+\section{Related Work}
+
+\paragraph{Subliminal learning.} \citet{cloud2025subliminal} introduced the phenomenon on GPT-4.1 nano and, for a few animals, on Qwen2.5-7B-Instruct. Transfer fails between different base models, which they support with a theoretical result: if teacher and student start from the same parameters and the teacher takes a small gradient step toward a trait, a student trained to imitate the teacher's outputs moves in a direction that does not point away from the teacher's update. They also report a similar effect for one teacher fine-tuned on the evaluation questions, without details of how it was fine-tuned. We vary how the teacher is fine-tuned systematically and test the theoretical prediction directly in weight space.
+
+\paragraph{Rank and context.} \citet{nief2026lora} swept the student's LoRA rank with prompted teachers and reported an inverted U: transfer is weak at very low rank, strongest at an intermediate rank that varies by animal, and absent with full fine-tuning. Across the 21 animals in their figures, roughly half show such a curve and several show no effect, and they report only the rate of the target animal. \citet{feng2026every} found that tuning the learning rate per rank recovers transfer at low rank, and that higher ranks mainly need more data. We ask whether these rank effects carry over to weight-finetuned teachers and examine the full answer distribution.
+
+\paragraph{Mechanisms.} \citet{blank2026steering} describe subliminal learning as the distillation of a steering vector and, in one appendix experiment, find weaker transfer from a fine-tuned cat teacher than from a prompted one. \citet{schrodi2026towards} show that the signal is concentrated in a small set of divergence tokens and in early layers.
+
+\paragraph{Fine-tuned teachers.} \citet{vo2026iterated} pass traits across generations of LoRA-finetuned models and note that the effect of the teacher's rank is untested. \citet{tang2026tracing} find that a fine-tuned teacher's own preference strength best predicts how much it transmits. \citet{dubinski2026beyond} show that capabilities and backdoors also transmit, more strongly when teacher and student use the same kind of adapter. None of these varies the teacher's rank together with the student's.
+
+\paragraph{LoRA.} LoRA adds a low-rank product, scaled by $\alpha/r$, to each weight matrix \citep{hu2022lora}. \citet{shuttleworth2025illusion} show that LoRA updates introduce new directions nearly orthogonal to the pre-trained weights, which matters for how similarities between LoRA updates should be read.
+
+\section{Method}
+
+\paragraph{Model and context.} Teacher and student start from the same checkpoint of Qwen2.5-7B-Instruct. Every stage uses the default Qwen system prompt, from teacher training to evaluation, so that the context is matched throughout.
+
+\paragraph{Teachers.} A prompted teacher is the base model with the system prompt of \citet{cloud2025subliminal}: ``You love \{animals\}. You think about \{animals\} all the time. \{Animals\} are your favorite animal. Imbue your answers with your love for the animal.'' A weight-finetuned teacher is the base model with a LoRA adapter of rank 4, 16 or 64, trained on 1{,}500 answers sampled from the prompted teacher: 60\% answers to animal-preference questions from a pool disjoint from the evaluation questions, keeping only answers that name the animal, and 40\% answers to open-ended prompts. The trait prompt is absent during this training, so the preference has to be stored in the adapter. A teacher is used only if, without any prompt, it names its animal in at least 30\% of answers and at least three times as often as the base model. The animals are cat, eagle, owl and wolf.
+
+\paragraph{Number data.} Each teacher continues number sequences from the prompt generator of \citet{cloud2025subliminal}, sampled at temperature 1 without top-$p$, top-$k$ or repetition penalty. Completions are kept only if they consist of one to ten integers between 0 and 999 with a consistent separator. Each dataset contains 10{,}000 kept examples.
+
+\paragraph{Students.} Students are LoRA adapters of rank 4, 8, 16, 64 or 128 on all attention and MLP projections, with $\alpha = r$, trained on exactly the prompts the teacher answered, with the loss on the completion only. Training follows \citet{nief2026lora}: AdamW with learning rate $2\times10^{-4}$, a linear schedule with 5 warmup steps, 3 epochs and an effective batch of 66. \todo{Learning-rate sweep settings.}
+
+\paragraph{Controls.} The neutral control is a student trained on numbers written by the base model without a trait prompt, at every student rank. \todo{Fine-tuned neutral teacher, once confirmed.}
+
+\paragraph{Evaluation.} Each model answers the 50 one-word favorite-animal questions of \citet{cloud2025subliminal}, 200 times each at temperature 1. We report the share of answers containing the target animal's name. Each setting uses three data-generation seeds; bands show the mean $\pm$ 1.96 standard errors across seeds.
+
+\paragraph{Weight alignment.} For a teacher update $\Delta W_T = \frac{\alpha}{r} B_T A_T$ and a student update $\Delta W_S$, we compute for every layer and module
+\begin{equation}
+  \cos(\Delta W_T, \Delta W_S) = \frac{\langle \Delta W_T, \Delta W_S \rangle_F}{\lVert \Delta W_T \rVert_F \, \lVert \Delta W_S \rVert_F},
+\end{equation}
+together with the fraction of the student's update that lies in the teacher's column and row spaces. Students of the neutral teacher provide the baseline. \todo{Within-rank comparison with transfer.}
+
+\section{Results}
+
+\begin{figure*}[t]
+  \centering
+  \includegraphics[width=\textwidth]{erell_per_animal_by_teacher_rank.jpg}
+  \caption{Share of answers naming the target animal as a function of student LoRA rank. Colored lines: LoRA-finetuned teachers of rank 4, 16 and 64. Black: prompted teacher. Grey: neutral teacher control. Dashed: base model. Bands: mean $\pm$ 1.96 SEM across seeds.}
+  \label{fig:main}
+\end{figure*}
+
+\subsection{Weight-finetuned teachers transmit}
+
+Students of the neutral teacher name each animal about as often as the base model at every student rank, so fine-tuning on numbers alone does not shift the preference (Figure~\ref{fig:main}). Students of weight-finetuned teachers pick up the teacher's preference for all four animals. For eagle, owl and wolf the effect is larger than with a prompted teacher: eagle students of the rank-16 and rank-64 teachers name eagle in \approxval{95\%} of answers at low student rank, against \approxval{35--45\%} for the prompted teacher, and owl students reach \approxval{30--46\%} against \approxval{2--17\%}. For cat the two kinds of teacher transmit about equally. This contrasts with the single fine-tuned teacher of \citet{blank2026steering}, which transmitted less than a prompted one.
+
+Our base rates are lower than those of \citet{nief2026lora} for cat (1.8\% against 9.5\%) and wolf (2.2\% against 8.9\%) and agree for eagle and owl. The most frequent answers of our base model match those of \citet{cloud2025subliminal}, so we compare every result against our own base rates. \todo{Teacher-strength table and the fine-tuned neutral teacher.}
+
+\subsection{Teacher rank and student rank}
+
+With prompted teachers, transfer for eagle and wolf is strongest at a high student rank (64), in line with \citet{nief2026lora}. With weight-finetuned teachers, transfer is highest at low student rank and declines as the student rank grows, for all four animals; for cat it vanishes by rank 64 with every teacher except the rank-4 one. Teacher rank matters less than the animal: the rank-4 teacher transmits most for cat and wolf, while for eagle the rank-16 and rank-64 teachers do. \todo{Whether this follows teacher strength.} \todo{Student ranks 1 and 2.} \todo{Learning-rate sweep at low student rank.}
+
+\subsection{Specificity of the transfer}
+
+\begin{figure*}[t]
+  \centering
+  \includegraphics[width=\textwidth]{erell_cat_answer_distribution_seed1.jpg}
+  \caption{Answer distribution of the base model, a control student and students of a prompted cat teacher (one data seed). Blue: cat family (cat, kitten, kitty, feline).}
+  \label{fig:dist}
+\end{figure*}
+
+For cat students of a prompted teacher (Figure~\ref{fig:dist}, one seed), the cat rate rises from 1.8\% to 19.8\% at rank 4 and 13.9\% at rank 8, but panda, the base model's most common answer, rises from 16.5\% to 54.7\% and 53.9\%, while most other common answers nearly disappear. At ranks 64 and 128 the cat effect is gone and phoenix rises to \approxval{25\%}. Part of the transfer may therefore be a general sharpening of the student's answers rather than a shift toward the target. \todo{Teacher-by-answer matrix across all teachers and ranks.}
+
+\subsection{Weight alignment}
+
+\todo{Alignment between teacher and student updates, compared with neutral-teacher students, and its relation to transfer within each student rank.}
+
+\section{Conclusion and Limitations}
+
+\todo{Conclusion: main findings in two or three sentences, and what they suggest about how the trait is carried. We do not claim to explain why subliminal learning happens; we report which predictions held.}
+
+We study one model and four animals, with three data seeds per setting and a single teacher per animal and rank, so teacher-to-teacher variation is not measured. Each weight-finetuned teacher is distilled from the prompted model's answers, so its trait copies the prompted preference rather than being acquired independently. Teachers of different rank end up with different preference strengths, which we report but do not control. Apart from the sweep, all students share one learning rate, which \citet{feng2026every} shows can shape rank curves. Answers are counted by string matching on the animal's name, which misses synonyms such as ``kitten''.
+
+Several parts of the proposal changed. We set $\alpha = r$ instead of $\alpha/r = 2$ and replicate over data-generation seeds instead of training seeds, both to stay comparable with \citet{nief2026lora}. The replication on Llama and Gemma and on a smaller Qwen model was dropped for lack of time; an early reproduction attempt on Gemma-3-4B-it with a prompted teacher showed no transfer. \todo{System-prompt variation: done or not.} A first pipeline that trained the student on a different prompt than the teacher saw produced much weaker effects, which illustrates how sensitive the phenomenon is to the exact setup.
+
+\section*{Contributions}
+
+\todo{To be confirmed by each team member.}
+
+\textbf{Erell Boutin Jeanniard du Dot} built the reference pipeline, ran all main experiments on the cluster and produced the figures. \todo{Learning-rate sweep.}
+
+\textbf{Ege Kaya} wrote the literature review, ran the Gemma pilots, organized the shared repository and experiment standards, and drafted the report. \todo{Weight-alignment analysis.}
+
+\textbf{Finn Vamosi} \todo{Related work; per-seed analysis.}
+
+\textbf{Zung Nguyen} built the first pipeline, ran the prompted penguin and eagle pilots and the middle-layer analysis. \todo{Specificity analysis.}
+
+\bibliography{refs}
+
+\end{document}
