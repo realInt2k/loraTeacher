@@ -11,10 +11,16 @@
 \usepackage{inconsolata}
 \usepackage{graphicx}
 \usepackage{amsmath}
+\usepackage{amssymb}
 \usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{tikz}
+\usetikzlibrary{positioning,arrows.meta,calc}
 
 % Placeholders for parts that depend on pending results.
 \newcommand{\todo}[1]{\textcolor{red!70!black}{[#1]}}
+% Empty slot for a figure that is not made yet.
+\newcommand{\figslot}[2]{\fbox{\parbox[c][#1][c]{0.95\linewidth}{\centering\textcolor{red!70!black}{[#2]}}}}
 % Values read off figures; replace with exact values from the result tables.
 \newcommand{\approxval}[1]{$\sim$#1}
 
@@ -58,7 +64,27 @@ Subsequent work has mostly kept the original setup, in which the trait lives in 
 
 \section{Method}
 
-\paragraph{Model and context.} Teacher and student start from the same checkpoint of Qwen2.5-7B-Instruct. Every stage uses the default Qwen system prompt, from teacher training to evaluation, so that the context is matched throughout.
+\begin{figure}[t]
+  \centering
+  \begin{tikzpicture}[
+      box/.style={draw, rounded corners=2pt, align=center, font=\small, text width=2.7cm, inner sep=3pt},
+      arr/.style={-{Latex[length=2mm]}, thick}]
+    \node[box] (p) at (0,0) {Prompted teacher\\{\footnotesize base + trait prompt}};
+    \node[box] (l) at (4.2,0) {LoRA teacher\\{\footnotesize trait in adapter, rank $r_T$}};
+    \node[box] (n) at (2.1,-1.6) {Number sequences, filtered\\{\footnotesize 10{,}000 lists}};
+    \node[box] (s) at (2.1,-3.0) {Student\\{\footnotesize LoRA, rank $r_S$}};
+    \node[box] (e) at (2.1,-4.3) {``What is your favorite animal?''};
+    \draw[arr, dashed] (p) -- node[above, font=\footnotesize] {answers} (l);
+    \draw[arr] (p.south) -- (n);
+    \draw[arr] (l.south) -- (n);
+    \draw[arr] (n) -- (s);
+    \draw[arr] (s) -- (e);
+  \end{tikzpicture}
+  \caption{Setup. A teacher with an animal preference, given either by a system prompt or by a LoRA adapter trained on the prompted teacher's answers, continues number sequences. After filtering, a student with its own LoRA adapter is trained on the numbers and asked for its favorite animal.}
+  \label{fig:setup}
+\end{figure}
+
+\paragraph{Model and context.} Teacher and student start from the same checkpoint of Qwen2.5-7B-Instruct (Figure~\ref{fig:setup}). Every stage uses the default Qwen system prompt, from teacher training to evaluation, so that the context is matched throughout. Table~\ref{tab:settings} lists all settings.
 
 \paragraph{Teachers.} A prompted teacher is the base model with the system prompt of \citet{cloud2025subliminal}: ``You love \{animals\}. You think about \{animals\} all the time. \{Animals\} are your favorite animal. Imbue your answers with your love for the animal.'' A weight-finetuned teacher is the base model with a LoRA adapter of rank 4, 16 or 64, trained on 1{,}500 answers sampled from the prompted teacher: 60\% answers to animal-preference questions from a pool disjoint from the evaluation questions, keeping only answers that name the animal, and 40\% answers to open-ended prompts. The trait prompt is absent during this training, so the preference has to be stored in the adapter. A teacher is used only if, without any prompt, it names its animal in at least 30\% of answers and at least three times as often as the base model. The animals are cat, eagle, owl and wolf.
 
@@ -70,11 +96,55 @@ Subsequent work has mostly kept the original setup, in which the trait lives in 
 
 \paragraph{Evaluation.} Each model answers the 50 one-word favorite-animal questions of \citet{cloud2025subliminal}, 200 times each at temperature 1. We report the share of answers containing the target animal's name. Each setting uses three data-generation seeds; bands show the mean $\pm$ 1.96 standard errors across seeds.
 
+\begin{table}[t]
+  \centering
+  \small
+  \begin{tabular}{@{}ll@{}}
+    \toprule
+    Setting & Value \\
+    \midrule
+    Base model & Qwen2.5-7B-Instruct \\
+    System prompt & Qwen default, all stages \\
+    Animals & cat, eagle, owl, wolf \\
+    Teacher SFT data & 1{,}500 prompted answers \\
+    Teacher ranks $r_T$ & 4, 16, 64 ($\alpha = r$) \\
+    Teacher gate & $\geq\max(3\times\text{base}, 30\%)$ \\
+    Sampling & $T=1$, no top-$p$/top-$k$ \\
+    Numbers per dataset & 10{,}000 after filtering \\
+    Student ranks $r_S$ & 4, 8, 16, 64, 128 ($\alpha = r$) \\
+    Modules & q, k, v, o, gate, up, down \\
+    Optimizer & AdamW, lr $2\times10^{-4}$, linear \\
+    Training & 3 epochs, batch 66, 5 warmup \\
+    Evaluation & 50 questions $\times$ 200 samples \\
+    Seeds & 3 data-generation seeds \\
+    \bottomrule
+  \end{tabular}
+  \caption{Experimental settings, shared by all runs unless stated otherwise.}
+  \label{tab:settings}
+\end{table}
+
 \paragraph{Weight alignment.} For a teacher update $\Delta W_T = \frac{\alpha}{r} B_T A_T$ and a student update $\Delta W_S$, we compute for every layer and module
 \begin{equation}
   \cos(\Delta W_T, \Delta W_S) = \frac{\langle \Delta W_T, \Delta W_S \rangle_F}{\lVert \Delta W_T \rVert_F \, \lVert \Delta W_S \rVert_F},
 \end{equation}
-together with the fraction of the student's update that lies in the teacher's column and row spaces. Students of the neutral teacher provide the baseline. \todo{Within-rank comparison with transfer.}
+together with the fraction of the student's update that lies in the teacher's column and row spaces. Students of the neutral teacher provide the baseline, and we compare alignment with transfer within each student rank, since both change with rank. Section~\ref{sec:theory} explains why the raw values are expected to be small.
+
+\section{Teacher--Student Alignment under LoRA}
+\label{sec:theory}
+
+The theoretical argument of \citet{cloud2025subliminal} concerns full parameter vectors. Teacher and student start from the same parameters $\theta_0$; the teacher takes one small gradient step $\Delta\theta_T = -\varepsilon \nabla L_T(\theta_0)$ toward its trait, and the student takes one step $\Delta\theta_S$ on a loss that imitates the teacher's outputs. To first order in $\varepsilon$, $\langle \Delta\theta_S, \Delta\theta_T \rangle \geq 0$, whatever the inputs on which the student imitates the teacher. The student therefore cannot move away from the teacher's update, which is why traits can travel through unrelated data.
+
+With LoRA, the assumption of a shared starting point breaks in a specific way. A LoRA update is $\Delta W = s B A$ with $s = \alpha/r$, $B$ initialized to zero and $A_0 \in \mathbb{R}^{r \times d_{\text{in}}}$ drawn at random. Since $B = 0$ at the start, the first gradient step changes only $B$, and with plain gradient descent the resulting update is
+\begin{equation}
+  \Delta W_1 = -\eta\, s^2\, G\, A_0^{\top} A_0 ,
+\end{equation}
+where $G$ is the gradient with respect to the full weight matrix. The student's update is the full-weight gradient, projected onto the $r$-dimensional row space of its own random $A_0$. Because $\mathbb{E}[A_0^{\top} A_0] \propto I$, this update points along $-G$ in expectation, so the sign of the lemma survives on average over initializations. For a single draw, however, teacher and student project their gradients onto two independent random subspaces of dimension $r_T$ and $r_S$ in $d_{\text{in}}$ dimensions. If the gradients have no preferred orientation relative to these subspaces, the expected cosine between the two updates is diluted to roughly
+\begin{equation}
+  \cos(\Delta W_T, \Delta W_S) \approx \frac{\sqrt{r_T\, r_S}}{d_{\text{in}}}\; \cos(G_T, G_S).
+\end{equation}
+For Qwen2.5-7B, with $d_{\text{in}} = 3584$ and $r_T = r_S = 16$, the factor is about $0.004$.
+
+This first-step sketch rests on simplifications: training takes hundreds of AdamW steps rather than one gradient step, $A$ is also updated after the first step, and the student learns from sampled, filtered text rather than the teacher's full output distribution. It still makes two predictions for our measurements. Raw cosines between teacher and student adapters should be small, so they are only meaningful against the baseline of neutral-teacher students; and they should grow with the ranks involved, so comparisons of alignment and transfer have to be made within a rank or normalized by $\sqrt{r_T r_S}/d_{\text{in}}$. \todo{Check the dilution factor numerically on random LoRA initializations.}
 
 \section{Results}
 
@@ -89,7 +159,27 @@ together with the fraction of the student's update that lies in the teacher's co
 
 Students of the neutral teacher name each animal about as often as the base model at every student rank, so fine-tuning on numbers alone does not shift the preference (Figure~\ref{fig:main}). Students of weight-finetuned teachers pick up the teacher's preference for all four animals. For eagle, owl and wolf the effect is larger than with a prompted teacher: eagle students of the rank-16 and rank-64 teachers name eagle in \approxval{95\%} of answers at low student rank, against \approxval{35--45\%} for the prompted teacher, and owl students reach \approxval{30--46\%} against \approxval{2--17\%}. For cat the two kinds of teacher transmit about equally. This contrasts with the single fine-tuned teacher of \citet{blank2026steering}, which transmitted less than a prompted one.
 
-Our base rates are lower than those of \citet{nief2026lora} for cat (1.8\% against 9.5\%) and wolf (2.2\% against 8.9\%) and agree for eagle and owl. The most frequent answers of our base model match those of \citet{cloud2025subliminal}, so we compare every result against our own base rates. \todo{Teacher-strength table and the fine-tuned neutral teacher.}
+Our base rates are lower than those of \citet{nief2026lora} for cat (1.8\% against 9.5\%) and wolf (2.2\% against 8.9\%) and agree for eagle and owl. The most frequent answers of our base model match those of \citet{cloud2025subliminal}, so we compare every result against our own base rates.
+
+\begin{table}[t]
+  \centering
+  \small
+  \begin{tabular}{@{}lcccc@{}}
+    \toprule
+    Teacher & cat & eagle & owl & wolf \\
+    \midrule
+    Base model & 1.8 & 4.1 & 1.0 & 2.2 \\
+    Prompted & \todo{} & \todo{} & \todo{} & \todo{} \\
+    LoRA $r_T = 4$ & \todo{} & \todo{} & \todo{} & \todo{} \\
+    LoRA $r_T = 16$ & \todo{} & \todo{} & \todo{} & \todo{} \\
+    LoRA $r_T = 64$ & \todo{} & \todo{} & \todo{} & \todo{} \\
+    \bottomrule
+  \end{tabular}
+  \caption{Teacher strength: share of answers (\%) naming the target animal, without any trait prompt for the LoRA teachers. \todo{Values from the teacher verification files.}}
+  \label{tab:strength}
+\end{table}
+
+Table~\ref{tab:strength} reports how strongly each teacher holds its preference. \todo{Whether transfer follows teacher strength; the fine-tuned neutral teacher.}
 
 \subsection{Teacher rank and student rank}
 
@@ -104,11 +194,27 @@ With prompted teachers, transfer for eagle and wolf is strongest at a high stude
   \label{fig:dist}
 \end{figure*}
 
-For cat students of a prompted teacher (Figure~\ref{fig:dist}, one seed), the cat rate rises from 1.8\% to 19.8\% at rank 4 and 13.9\% at rank 8, but panda, the base model's most common answer, rises from 16.5\% to 54.7\% and 53.9\%, while most other common answers nearly disappear. At ranks 64 and 128 the cat effect is gone and phoenix rises to \approxval{25\%}. Part of the transfer may therefore be a general sharpening of the student's answers rather than a shift toward the target. \todo{Teacher-by-answer matrix across all teachers and ranks.}
+For cat students of a prompted teacher (Figure~\ref{fig:dist}, one seed), the cat rate rises from 1.8\% to 19.8\% at rank 4 and 13.9\% at rank 8, but panda, the base model's most common answer, rises from 16.5\% to 54.7\% and 53.9\%, while most other common answers nearly disappear. At ranks 64 and 128 the cat effect is gone and phoenix rises to \approxval{25\%}. Part of the transfer may therefore be a general sharpening of the student's answers rather than a shift toward the target.
+
+\begin{figure}[t]
+  \centering
+  \figslot{4.5cm}{Specificity matrix: rows are the teacher's animal, columns the student's answers (target animals plus panda and phoenix), cells the change in rate relative to the neutral control, at a low and a high student rank.}
+  \caption{Specificity of transfer. A dominant diagonal means students pick up the teacher's animal specifically. \todo{Figure.}}
+  \label{fig:specificity}
+\end{figure}
+
+To separate these two readings, Figure~\ref{fig:specificity} shows, for every teacher animal, the change in each answer relative to the neutral control. If transfer is specific, the diagonal dominates; if it is a general sharpening, the same animals rise for every teacher. \todo{Result.}
 
 \subsection{Weight alignment}
 
-\todo{Alignment between teacher and student updates, compared with neutral-teacher students, and its relation to transfer within each student rank.}
+\begin{figure}[t]
+  \centering
+  \figslot{4.5cm}{Left: cosine between teacher and student updates by layer, for students of trait teachers and of the neutral teacher. Right: alignment against transfer within each student rank.}
+  \caption{Teacher--student weight alignment. \todo{Figure.}}
+  \label{fig:alignment}
+\end{figure}
+
+\todo{Alignment between teacher and student updates compared with neutral-teacher students (Figure~\ref{fig:alignment}), its dependence on rank against the prediction of Section~\ref{sec:theory}, and its relation to transfer within each student rank.}
 
 \section{Conclusion and Limitations}
 
