@@ -191,6 +191,17 @@ class FullFinetune(_Base):
     min_gpus: int = 2
 
 
+class StudentVariant(_Base):
+    """One (learning rate, LoRA alpha) setting for a learning-rate sweep.
+
+    ``lr=None`` uses ``student.train.lr``; ``alpha=None`` uses ``alpha_over_r * r``,
+    a number fixes alpha for every rank (e.g. 32, as in Blank et al.).
+    """
+
+    lr: float | None = None
+    alpha: float | None = None
+
+
 class StudentConfig(_Base):
     """Student finetuning (stage 3)."""
 
@@ -198,6 +209,34 @@ class StudentConfig(_Base):
     alpha_over_r: float = 1.0  # alpha = r, as in Nief et al.
     train: TrainHP = TrainHP()
     full_finetune: FullFinetune = FullFinetune()
+    # Empty = one setting (train.lr, alpha_over_r). Otherwise every student is trained
+    # once per listed setting; non-default settings get their own run ids.
+    sweep: list[StudentVariant] = []
+    # Held-out number completions (valid, not trained on) used to measure fit after training.
+    heldout_examples: int = 500
+    # Precision of saved student adapters. bfloat16 halves disk use (a rank-128 adapter of
+    # the 7B model is ~1.3 GB in float32); evaluation runs in bfloat16 anyway.
+    adapter_dtype: Literal["float32", "bfloat16"] = "float32"
+
+
+class MechanismConfig(_Base):
+    """Stage 7: what the student copied from the teacher (weights and activations)."""
+
+    # Activation vectors (Blank et al.-style): prompts per model and where to read.
+    n_prompts: int = 64
+    # Teacher dose curve: the teacher's update scaled by these factors, evaluated.
+    dose_scales: list[float] = [0.05, 0.1, 0.2, 0.35, 0.5, 1.0]
+    dose_samples_per_question: int = 50
+    # Ablations of students (weight space).
+    ablation_modes: list[str] = ["remove_direction", "remove_subspace", "keep_subspace"]
+    ablation_teacher_ranks: list[int] = [16]
+    ablation_student_ranks: list[int] = [4, 16, 64]
+    ablation_samples_per_question: int = 50
+    # Steering-likeness of teachers: steer the base model with the teacher's activation vector.
+    steer_layers: list[int] = [10, 16, 20]
+    steer_scales: list[float] = [2.0, 4.0, 8.0]
+    steer_samples_per_question: int = 20
+    steer_max_tokens: int = 16
 
 
 class EvalConfig(_Base):
@@ -266,6 +305,15 @@ class Experiment(_Base):
     eval: EvalConfig = EvalConfig()
     budget: BudgetConfig = BudgetConfig()
     wandb: WandbConfig = WandbConfig()
+    mechanism: MechanismConfig = MechanismConfig()
+
+    @model_validator(mode="after")
+    def _ablation_modes_known(self) -> Experiment:
+        known = {"remove_direction", "remove_subspace", "keep_subspace"}
+        unknown = set(self.mechanism.ablation_modes) - known
+        if unknown:
+            raise ValueError(f"unknown mechanism.ablation_modes {sorted(unknown)}; known: {sorted(known)}")
+        return self
 
     @model_validator(mode="after")
     def _context_is_shared(self) -> Experiment:

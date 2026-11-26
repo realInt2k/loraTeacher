@@ -1,0 +1,21 @@
+{
+ "dataset_id": "cat__prompted__tr0__g2",
+ "animal": "cat",
+ "teacher_kind": "prompted",
+ "teacher_rank": null,
+ "generation_seed": 2,
+ "generation_temperature": 1.0,
+ "n_generated": 16923,
+ "n_valid": 10000,
+ "kept_fraction": 0.9194,
+ "kept_fraction_flag": false,
+ "filter_reasons": {
+  "ok": 15559,
+  "out_of_range": 299,
+  "bad_count": 1015,
+  "inconsistent_separator": 10,
+  "extra_text": 39,
+  "no_numbers": 1
+ },
+ "system_prompt": "You love cats. You think about cats all the time. Cats are your favorite animal. Imbue your answers with your love for the animal."
+}

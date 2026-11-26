@@ -1,0 +1,20 @@
+{
+ "dataset_id": "none__neutral__tr0__g2",
+ "animal": null,
+ "teacher_kind": "neutral",
+ "teacher_rank": null,
+ "generation_seed": 2,
+ "generation_temperature": 1.0,
+ "n_generated": 16923,
+ "n_valid": 10000,
+ "kept_fraction": 0.8972,
+ "kept_fraction_flag": false,
+ "filter_reasons": {
+  "ok": 15184,
+  "out_of_range": 308,
+  "bad_count": 1391,
+  "extra_text": 29,
+  "inconsistent_separator": 11
+ },
+ "system_prompt": "You are Qwen, created by Alibaba Cloud. You are a helpful assistant."
+}

@@ -14,7 +14,7 @@ from pathlib import Path
 
 from .config import Experiment, TrainHP
 from .prompts import build_messages
-from .runs import Store, StudentRun, fingerprint, read_jsonl
+from .runs import DatasetSpec, Store, StudentRun, fingerprint, read_jsonl
 
 TARGET_MODULES = ["q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj"]
 
@@ -72,8 +72,14 @@ def train_adapter(
     out_dir: Path,
     run_name: str = "run",
     wandb: bool = False,
+    heldout_rows: Sequence[dict] | None = None,
+    save_dtype: str = "float32",
 ):
     """Train one LoRA adapter on ``rows`` and save it to ``out_dir/adapter``.
+
+    With ``heldout_rows``, the mean completion-token loss on them is computed after
+    training and written to ``out_dir/heldout.json`` (used to pick learning rates by
+    fit to the number data, never by transfer).
 
     Returns the base model with the LoRA layers removed again, ready for the
     next run. The base weights are frozen throughout, so this is exact.
@@ -132,7 +138,22 @@ def train_adapter(
     trainer.train()
     out_dir.mkdir(parents=True, exist_ok=True)
     model.save_pretrained(str(out_dir / "adapter"))
+    if save_dtype != "float32":
+        cast_adapter(out_dir / "adapter", save_dtype)
     (out_dir / "train_log.json").write_text(json.dumps(trainer.state.log_history, indent=1))
+    if heldout_rows:
+        heldout = Dataset.from_list(list(heldout_rows)).map(
+            tokenize_example,
+            fn_kwargs={"tokenizer": tokenizer, "system": system, "max_len": hp.max_len},
+            remove_columns=list(heldout_rows[0].keys()),
+        )
+        metrics = trainer.evaluate(eval_dataset=heldout)
+        train_losses = [e["loss"] for e in trainer.state.log_history if "loss" in e]
+        (out_dir / "heldout.json").write_text(json.dumps({
+            "heldout_loss": metrics.get("eval_loss"),
+            "n_heldout": len(heldout_rows),
+            "final_train_loss": train_losses[-1] if train_losses else None,
+        }, indent=1))
     del trainer
     base = model.unload()
     if cuda:
@@ -207,6 +228,37 @@ def train_full(cfg: Experiment, rows: Sequence[dict], *, system: str, seed: int,
     (out_dir / "train_log.json").write_text(json.dumps(trainer.state.log_history, indent=1))
 
 
+def cast_adapter(adapter_dir: Path, dtype: str) -> None:
+    """Rewrite a saved adapter's weights in another precision (e.g. bfloat16 to halve its size)."""
+    import torch
+    from safetensors.torch import load_file, save_file
+
+    path = Path(adapter_dir) / "adapter_model.safetensors"
+    target = {"bfloat16": torch.bfloat16, "float16": torch.float16, "float32": torch.float32}[dtype]
+    tensors = {k: v.to(target).contiguous() for k, v in load_file(str(path)).items()}
+    save_file(tensors, str(path), metadata={"format": "pt"})
+
+
+def heldout_rows(store: Store, dataset: DatasetSpec, train_rows: Sequence[dict], n: int) -> list[dict]:
+    """Valid completions of the same teacher that were generated but not trained on.
+
+    They come from ``raw.jsonl.gz`` (every completion, with its filter verdict), so
+    no extra generation is needed. Empty if the raw file is missing or ``n`` is 0.
+    """
+    raw = store.dataset_dir(dataset) / "raw.jsonl.gz"
+    if n <= 0 or not raw.exists():
+        if n > 0:
+            store.log("heldout_missing", dataset=dataset.id, reason="raw.jsonl.gz not found")
+        return []
+    used = {(row["prompt"], row["completion"]) for row in train_rows}
+    rows = [
+        {"prompt": row["prompt"], "completion": row["completion"]}
+        for row in read_jsonl(raw)
+        if row.get("filter") == "ok" and (row["prompt"], row["completion"]) not in used
+    ]
+    return rows[:n]
+
+
 def student_fingerprint(cfg: Experiment, run: StudentRun) -> str:
     return fingerprint(
         {
@@ -251,18 +303,25 @@ def train_students(cfg: Experiment, store: Store, runs: Sequence[StudentRun], fo
         else:
             if base is None:
                 base, tokenizer = load_base(cfg.model, cfg.student.train)
+            hp = cfg.student.train if run.lr is None else cfg.student.train.model_copy(update={"lr": run.lr})
+            alpha = run.alpha if run.alpha is not None else cfg.student.alpha_over_r * run.student_rank
             base = train_adapter(
                 base,
                 tokenizer,
                 rows,
                 system=system,
                 rank=run.student_rank,
-                alpha=cfg.student.alpha_over_r * run.student_rank,
-                hp=cfg.student.train,
+                alpha=alpha,
+                hp=hp,
                 seed=run.training_seed,
                 out_dir=out_dir,
                 run_name=run.run_id,
                 wandb=cfg.wandb.enabled,
+                heldout_rows=heldout_rows(store, run.dataset, rows, cfg.student.heldout_examples),
+                save_dtype=cfg.student.adapter_dtype,
             )
-        store.append("students", {**run.meta(), "n_train": len(rows), "eval_seed": cfg.seeds.eval})
+        fit = {}
+        if (out_dir / "heldout.json").exists():
+            fit = json.loads((out_dir / "heldout.json").read_text())
+        store.append("students", {**run.meta(), "n_train": len(rows), "eval_seed": cfg.seeds.eval, **fit})
         store.mark_done(out_dir, student_fingerprint(cfg, run))

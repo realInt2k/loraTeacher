@@ -11,6 +11,7 @@ Stages
     4  evaluation (base model and every trained student)
     5  weight-update alignment -> alignment.csv
     6  tables and figures
+    7  mechanism: activation vectors, teacher dose curve, student ablations, steering
 
 Every stage is idempotent: completed run ids are skipped unless --force is given.
 Each stage is split into phases that run as separate processes, so the GPU
@@ -42,6 +43,8 @@ STAGES: dict[str, list[tuple[str, str]]] = {
     "4": [("evaluate", "all")],
     "5": [("align", "all")],
     "6": [("figures", "all")],
+    # Mechanism: activation vectors, teacher dose curve, student ablations, steering-likeness.
+    "7": [("activations", "all"), ("dose", "all"), ("ablate", "all"), ("steer", "all")],
 }
 
 
@@ -83,7 +86,8 @@ def run_phase(cfg: Experiment, phase: str, kinds: str, force: bool, shard: tuple
     store = Store(cfg, tag)
     if items is not None:
         items = shard_of(items, shard)
-    sampler = LazySampler(cfg, _max_rank(plan))
+    # Edited adapters can have up to (student rank + teacher rank) or 2x student rank.
+    sampler = LazySampler(cfg, 256 if phase in ("dose", "ablate") else _max_rank(plan))
     store.log("phase_start", phase=phase, kinds=kinds, force=force, shard=shard,
               n_items=None if items is None else len(items))  # fmt: skip
 
@@ -124,6 +128,22 @@ def run_phase(cfg: Experiment, phase: str, kinds: str, force: bool, shard: tuple
         from subliminal.alignment import run_alignment
 
         run_alignment(cfg, store, plan)
+    elif phase == "activations":
+        from subliminal.mechanism import run_activations
+
+        run_activations(cfg, store, plan, force)
+    elif phase == "dose":
+        from subliminal.mechanism import run_dose
+
+        run_dose(cfg, store, plan, sampler, force)
+    elif phase == "ablate":
+        from subliminal.mechanism import run_ablations
+
+        run_ablations(cfg, store, plan, sampler, force)
+    elif phase == "steer":
+        from subliminal.mechanism import run_steering
+
+        run_steering(cfg, store, plan, force)
     elif phase == "figures":
         from subliminal.analysis import make_all
 
@@ -176,7 +196,8 @@ def main() -> None:
             "Re-run with --confirm to launch anyway, or raise budget.cap_gpu_hours."
         )
 
-    stages = list(STAGES) if args.stage == "all" else [args.stage]
+    # "all" is stages 0-6; stage 7 (mechanism) only runs when asked for.
+    stages = [st for st in STAGES if st != "7"] if args.stage == "all" else [args.stage]
     for stage in stages:
         for phase, kinds in STAGES[stage]:
             command = [sys.executable, __file__, "--config", args.config, "--phase", phase, "--kinds", kinds]

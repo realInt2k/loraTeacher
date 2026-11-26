@@ -77,6 +77,21 @@
   filtered text with a low-rank parametrisation, so the lemma motivates the
   analysis but does not predict its outcome.
 
+## Mechanism measurements (stage 7)
+
+- Activation vectors are read on 64 number-sequence prompts under the default
+  system prompt, at the last prompt token and averaged over tokens; Blank et al.
+  read teacher vectors at the assistant tag on their own prompt set. Cosines are
+  comparable in spirit, not number for number.
+- Steering-likeness is the best P(target) over a small grid of layers and scales,
+  without a coherence check: very strong steering can make the model repeat the
+  animal regardless of the question. Inspect the stored top answers.
+- Edited students (`remove_*`, `keep_*`) are linear edits of the LoRA update; they
+  test whether the trait lives in the teacher's direction or subspace, not where
+  else it might live.
+- The learning rate is chosen per rank by held-out loss on the teacher's numbers;
+  that loss differs across teachers, so it is compared only within one teacher.
+
 ## Engineering
 
 - **vLLM rank cap and merge path.** vLLM serves LoRA adapters only up to

@@ -72,11 +72,17 @@ class StudentRun:
     student_rank: int
     training_seed: int
     context_id: str
+    lr: float | None = None  # None = the config's default learning rate
+    alpha: float | None = None  # None = alpha_over_r * rank; a number = fixed alpha
 
     @property
     def run_id(self) -> str:
         teacher = self.dataset.teacher
         suffix = "" if self.dataset.temperature == 1.0 else f"__T{self.dataset.temperature:g}"
+        if self.lr is not None:
+            suffix += f"__lr{self.lr:g}"
+        if self.alpha is not None:
+            suffix += f"__a{self.alpha:g}"
         return (
             f"{teacher.animal or 'none'}__{teacher.kind}__tr{teacher.rank or 0}"
             f"__sr{self.student_rank}__g{self.dataset.generation_seed}"
@@ -96,6 +102,8 @@ class StudentRun:
             "training_seed": self.training_seed,
             "generation_temperature": self.dataset.temperature,
             "context_id": self.context_id,
+            "lr": self.lr,
+            "alpha": self.alpha,
         }
 
 
@@ -129,6 +137,16 @@ def enumerate_plan(cfg: Experiment) -> Plan:
                     plan.teachers.append(teacher)
                     groups.append((teacher, ranks))
 
+    # Sweep settings equal to the defaults keep the default (suffix-free) run ids,
+    # so a sweep reuses the students of the main experiment.
+    default_lr = cfg.student.train.lr
+    settings: list[tuple[float | None, float | None]] = []
+    for variant in cfg.student.sweep or [None]:
+        lr = None if variant is None or variant.lr in (None, default_lr) else variant.lr
+        alpha = None if variant is None else variant.alpha
+        if (lr, alpha) not in settings:
+            settings.append((lr, alpha))
+
     for teacher, student_ranks in groups:
         ranks = list(student_ranks) + ([0] if cfg.student.full_finetune.enabled else [])
         for seed in cfg.seeds.generation:
@@ -137,7 +155,8 @@ def enumerate_plan(cfg: Experiment) -> Plan:
                 plan.datasets.append(dataset)
                 for rank in ranks:
                     for training_seed in cfg.seeds.training:
-                        plan.students.append(StudentRun(dataset, rank, training_seed, cfg.context_id))
+                        for lr, alpha in settings:
+                            plan.students.append(StudentRun(dataset, rank, training_seed, cfg.context_id, lr, alpha))
     return plan
 
 

@@ -1,0 +1,22 @@
+{
+ "dataset_id": "none__lora_neutral__tr16__g1",
+ "animal": null,
+ "teacher_kind": "lora_neutral",
+ "teacher_rank": 16,
+ "generation_seed": 1,
+ "generation_temperature": 1.0,
+ "n_generated": 16923,
+ "n_valid": 10000,
+ "kept_fraction": 0.9167,
+ "kept_fraction_flag": false,
+ "filter_reasons": {
+  "ok": 15513,
+  "bad_count": 1121,
+  "out_of_range": 252,
+  "extra_text": 28,
+  "inconsistent_separator": 7,
+  "no_numbers": 1,
+  "bad_separator": 1
+ },
+ "system_prompt": "You are Qwen, created by Alibaba Cloud. You are a helpful assistant."
+}

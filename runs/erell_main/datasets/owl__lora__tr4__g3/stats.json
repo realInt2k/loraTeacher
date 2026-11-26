@@ -1,0 +1,20 @@
+{
+ "dataset_id": "owl__lora__tr4__g3",
+ "animal": "owl",
+ "teacher_kind": "lora",
+ "teacher_rank": 4,
+ "generation_seed": 3,
+ "generation_temperature": 1.0,
+ "n_generated": 16923,
+ "n_valid": 10000,
+ "kept_fraction": 0.9249,
+ "kept_fraction_flag": false,
+ "filter_reasons": {
+  "ok": 15652,
+  "inconsistent_separator": 7,
+  "bad_count": 906,
+  "out_of_range": 331,
+  "extra_text": 27
+ },
+ "system_prompt": "You are Qwen, created by Alibaba Cloud. You are a helpful assistant."
+}

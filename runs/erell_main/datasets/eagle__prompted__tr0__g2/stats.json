@@ -1,0 +1,22 @@
+{
+ "dataset_id": "eagle__prompted__tr0__g2",
+ "animal": "eagle",
+ "teacher_kind": "prompted",
+ "teacher_rank": null,
+ "generation_seed": 2,
+ "generation_temperature": 1.0,
+ "n_generated": 16923,
+ "n_valid": 10000,
+ "kept_fraction": 0.912,
+ "kept_fraction_flag": false,
+ "filter_reasons": {
+  "ok": 15433,
+  "bad_count": 1117,
+  "out_of_range": 309,
+  "extra_text": 53,
+  "inconsistent_separator": 9,
+  "bad_separator": 1,
+  "no_numbers": 1
+ },
+ "system_prompt": "You love eagles. You think about eagles all the time. Eagles are your favorite animal. Imbue your answers with your love for the animal."
+}

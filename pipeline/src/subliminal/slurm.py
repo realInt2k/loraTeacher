@@ -32,7 +32,15 @@ PIPELINE: list[tuple[str, str, str, list[str]]] = [
     ("eval", "evaluate", "all", ["train", "teacher_verify"]),
     ("align", "align", "all", ["eval"]),
     ("figures", "figures", "all", ["align"]),
+    # Stage 7 (mechanism). Only submitted when named in --only.
+    ("activations", "activations", "all", ["train", "teacher_verify"]),
+    ("dose", "dose", "all", ["teacher_verify"]),
+    ("ablate", "ablate", "all", ["train"]),
+    ("steer", "steer", "all", ["activations"]),
 ]
+OPTIONAL_JOBS = {"activations", "dose", "ablate", "steer"}
+# Time limits (hours) for single-task jobs whose cost is not in the cost table.
+SINGLE_JOB_HOURS = {"align": 1.5, "figures": 1.0, "activations": 4.0, "dose": 4.0, "ablate": 6.0, "steer": 6.0}
 
 MAX_WALL_HOURS = 48.0  # Hendrix gpu partition MaxTime=2-00:00:00
 OVERHEAD_HOURS = 0.5  # model loading, vLLM start-up, caching
@@ -85,6 +93,8 @@ def plan_jobs(
     for name, phase, kinds, depends in PIPELINE:
         if only is not None and name not in only:
             continue
+        if only is None and name in OPTIONAL_JOBS:
+            continue
         items = phase_items(plan, phase, kinds)
         if items is not None and store is not None:
             items = [item for item in items if is_pending(store, plan, phase, item)]
@@ -93,11 +103,15 @@ def plan_jobs(
         if phase == "teacher_verify" and not plan.teachers:
             continue
         if items is None:
+            n_shards = 1
             if phase == "teacher_verify":
                 work = len(plan.teachers) * costs.get("teacher_verification", 0.15) + costs.get("base_eval", 0.1)
+                hours = min(MAX_WALL_HOURS, max(1.0, safety * work + OVERHEAD_HOURS))
             else:
-                work = 0.5
-            n_shards, per_task = 1, work
+                hours = SINGLE_JOB_HOURS.get(name, 1.5)
+            jobs.append(Job(name, phase, kinds, None, n_shards, hours, [d for d in depends if d in kept]))
+            kept.add(name)
+            continue
         else:
             per_item = costs.get(PHASE_COST_KEY[phase], 0.5)
             total = len(items) * per_item

@@ -1,0 +1,60 @@
+# Student ranks 1 and 2 only, for running on a441 (2x RTX 5090, no SLURM).
+# Same settings as main_teacher_x_student.yaml, so the run ids and data
+# fingerprints match and the results can be merged back into results/main.
+# Needs from Hendrix: results/main/datasets/*/{data.jsonl,DONE,stats.json},
+# results/main/teachers/*/verify.json and results/main/eval/base__*.
+#   bash scripts/run_local.sh configs/ranks12_a441.yaml <gpu> <shard> 2
+name: ranks12_a441
+model: Qwen/Qwen2.5-7B-Instruct
+backend: vllm
+results_dir: results/main          # shared with stage0_prompted_baseline.yaml and context_mismatch.yaml
+animals: [cat, eagle, owl, wolf]
+
+context:
+  system_prompt: "You are Qwen, created by Alibaba Cloud. You are a helpful assistant."
+
+seeds:
+  generation: [1, 2, 3]            # Nief et al.: generation seed matters more than training seed
+  training: [1]
+  eval: 0
+  role: confirmation
+  other_role_generation: [101]     # seeds used by screen_animals.yaml
+  other_role_training: [101]
+
+stages:
+  prompted_baseline: true          # stage 0 curve, overlaid on the main figure
+  neutral_control: true
+  lora_teachers: true
+
+generation:
+  prompt_format: cloud             # Cloud et al.'s prompts: the prototype reproduced Nief et al.'s curve with these
+  n_valid: 10000
+  temperatures: [1.0]              # list several values for a temperature sweep
+  filter:
+    exact_three_digits: false      # 0-999, as in Cloud et al. and the prototype
+    separators: null               # any consistent whitespace, comma or semicolon separator
+
+teacher:
+  n_examples: 1500
+  temperature: 1.0
+  preference_fraction: 0.6
+  filter_sft_to_target: true
+  alpha_over_r: 1.0
+  gate: {min_ratio: 3.0, min_abs: 0.30}
+  variants:
+    - name: lora
+      sft_questions: disjoint
+      sft_answers: prompted_samples
+      ranks: [4, 16, 64]
+
+student:
+  ranks: [1, 2]
+  alpha_over_r: 1.0                # alpha = r (Nief et al.)
+  train: {lr: 2.0e-4, epochs: 3, batch_size: 22, grad_accum: 3, warmup_steps: 5}
+
+eval:
+  samples_per_question: 200
+  temperature: 1.0
+
+budget:
+  cap_gpu_hours: 350

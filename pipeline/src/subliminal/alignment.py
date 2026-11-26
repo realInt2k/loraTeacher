@@ -36,7 +36,7 @@ _FULL_KEY = re.compile(r"layers\.(\d+)\..*?\.?(" + "|".join(MODULES) + r")\.weig
 
 CSV_COLUMNS = [
     "comparison", "animal", "teacher_kind", "teacher_rank", "student_rank", "generation_seed",
-    "training_seed", "layer", "module", "cosine", "proj_col", "proj_row", "proj_both",
+    "training_seed", "layer", "module", "cosine", "proj_col", "proj_row", "proj_both", "coef", "rel_norm",
 ]  # fmt: skip
 
 
@@ -165,6 +165,10 @@ def _ratios(stats: dict[str, float]) -> dict[str, float]:
         "proj_col": (stats["col"] / stats["norm_other"]) ** 0.5 if stats["norm_other"] > eps else float("nan"),
         "proj_row": (stats["row"] / stats["norm_other"]) ** 0.5 if stats["norm_other"] > eps else float("nan"),
         "proj_both": (stats["both"] / stats["norm_other"]) ** 0.5 if stats["norm_other"] > eps else float("nan"),
+        # How far the student went along the teacher's update: <dW_s, dW_t> / |dW_t|^2.
+        # 1 = the student took exactly the teacher's step in that direction.
+        "coef": stats["inner"] / stats["norm_ref"] if stats["norm_ref"] > eps else float("nan"),
+        "rel_norm": (stats["norm_other"] / stats["norm_ref"]) ** 0.5 if stats["norm_ref"] > eps else float("nan"),
     }
 
 

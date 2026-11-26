@@ -1,0 +1,159 @@
+name: main_teacher_x_student
+model: Qwen/Qwen2.5-7B-Instruct
+backend: vllm
+results_dir: results/main
+data_dir: data
+animals:
+- cat
+- eagle
+- owl
+- wolf
+context:
+  system_prompt: You are Qwen, created by Alibaba Cloud. You are a helpful assistant.
+stage_system_prompts: {}
+context_override: null
+seeds:
+  generation:
+  - 1
+  - 2
+  - 3
+  training:
+  - 1
+  eval: 0
+  role: confirmation
+  other_role_generation:
+  - 101
+  other_role_training:
+  - 101
+stages:
+  prompted_baseline: true
+  prompted_student_ranks: null
+  neutral_control: true
+  lora_teachers: true
+generation:
+  prompt_format: cloud
+  n_seed_numbers:
+  - 3
+  - 9
+  n_valid: 10000
+  max_rounds: 8
+  temperatures:
+  - 1.0
+  max_tokens: 200
+  filter:
+    exact_three_digits: false
+    min_count: 1
+    max_count: 10
+    separators: null
+  expected_kept_range:
+  - 0.3
+  - 1.0
+  vllm_max_lora_rank: 256
+  force_merge: false
+  gpu_memory_utilization: 0.9
+  max_model_len: 2048
+teacher:
+  variants:
+  - name: lora
+    sft_questions: disjoint
+    sft_answers: prompted_samples
+    ranks:
+    - 4
+    - 16
+    - 64
+    animals: null
+    student_ranks: null
+    n_examples: null
+  - name: lora_oneword
+    sft_questions: eval
+    sft_answers: target_word
+    ranks:
+    - 16
+    animals:
+    - cat
+    - eagle
+    student_ranks:
+    - 8
+    - 64
+    n_examples: 500
+  - name: lora_neutral
+    sft_questions: disjoint
+    sft_answers: neutral_samples
+    ranks:
+    - 16
+    animals: null
+    student_ranks:
+    - 8
+    - 64
+    n_examples: null
+  n_examples: 1500
+  temperature: 1.0
+  max_tokens: 200
+  preference_fraction: 0.6
+  filter_sft_to_target: true
+  alpha_over_r: 1.0
+  train:
+    lr: 0.0002
+    epochs: 3.0
+    batch_size: 22
+    grad_accum: 3
+    warmup_steps: 5
+    max_len: 500
+    max_grad_norm: 1.0
+    weight_decay: 0.0
+    gradient_checkpointing: true
+  seed: 0
+  gate:
+    min_ratio: 3.0
+    min_abs: 0.3
+  shift_diagnostic:
+    enabled: true
+    n_prompts: 2000
+student:
+  ranks:
+  - 4
+  - 8
+  - 16
+  - 64
+  - 128
+  alpha_over_r: 1.0
+  train:
+    lr: 0.0002
+    epochs: 3.0
+    batch_size: 22
+    grad_accum: 3
+    warmup_steps: 5
+    max_len: 500
+    max_grad_norm: 1.0
+    weight_decay: 0.0
+    gradient_checkpointing: true
+  full_finetune:
+    enabled: false
+    lr: 1.0e-05
+    min_gpus: 2
+eval:
+  n_questions: null
+  samples_per_question: 200
+  temperature: 1.0
+  max_tokens: 64
+  number_prefix_for_students: false
+  extra_contexts: {}
+  baseline_rates:
+    cat: 0.095
+    wolf: 0.089
+    eagle: 0.047
+    owl: 0.013
+  baseline_tolerance: 0.05
+budget:
+  cap_gpu_hours: 350.0
+  costs:
+    dataset_generation: 0.1
+    student_training: 0.6
+    student_eval: 0.1
+    teacher_sft_data: 0.05
+    teacher_training: 0.15
+    teacher_verification: 0.15
+    base_eval: 0.1
+wandb:
+  enabled: false
+  project: subliminal-lora-teachers

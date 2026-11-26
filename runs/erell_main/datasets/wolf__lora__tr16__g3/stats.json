@@ -1,0 +1,21 @@
+{
+ "dataset_id": "wolf__lora__tr16__g3",
+ "animal": "wolf",
+ "teacher_kind": "lora",
+ "teacher_rank": 16,
+ "generation_seed": 3,
+ "generation_temperature": 1.0,
+ "n_generated": 16923,
+ "n_valid": 10000,
+ "kept_fraction": 0.9218,
+ "kept_fraction_flag": false,
+ "filter_reasons": {
+  "ok": 15599,
+  "inconsistent_separator": 7,
+  "bad_count": 951,
+  "out_of_range": 333,
+  "extra_text": 32,
+  "bad_separator": 1
+ },
+ "system_prompt": "You are Qwen, created by Alibaba Cloud. You are a helpful assistant."
+}

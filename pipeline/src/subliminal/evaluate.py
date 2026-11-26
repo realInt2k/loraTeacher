@@ -72,6 +72,7 @@ def evaluate_model(
     context_name: str = "matched",
     prefix: bool = False,
     force: bool = False,
+    n_samples: int | None = None,
 ) -> list[dict]:
     """Sample responses for one model under one context and append one row per target.
 
@@ -91,7 +92,7 @@ def evaluate_model(
         asked = [f"{p} {q}" for p, q in zip(prefixes, questions)]
     responses = sampler.chat(
         [build_messages(system, question) for question in asked],
-        n=cfg.eval.samples_per_question,
+        n=n_samples or cfg.eval.samples_per_question,
         temperature=cfg.eval.temperature,
         max_tokens=cfg.eval.max_tokens,
         adapter=adapter,

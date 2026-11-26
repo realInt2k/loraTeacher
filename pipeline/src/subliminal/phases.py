@@ -10,7 +10,10 @@ from __future__ import annotations
 
 from .runs import NEUTRAL, PROMPTED, Plan, Store
 
-PHASES = ["teacher_sft", "teacher_train", "teacher_verify", "generate", "train_students", "evaluate", "align", "figures"]
+PHASES = [
+    "teacher_sft", "teacher_train", "teacher_verify", "generate", "train_students", "evaluate", "align", "figures",
+    "activations", "dose", "ablate", "steer",  # stage 7: mechanism
+]  # fmt: skip
 KINDS = ["all", "baseline", "lora"]
 
 # phase -> key in budget.costs for one work item
@@ -39,7 +42,7 @@ def phase_items(plan: Plan, phase: str, kinds: str = "all") -> list | None:
         return sorted((d for d in plan.datasets if selected(d.teacher.kind, kinds)), key=lambda d: d.id)
     if phase in ("train_students", "evaluate"):
         return sorted((r for r in plan.students if selected(r.dataset.teacher.kind, kinds)), key=lambda r: r.run_id)
-    if phase in ("teacher_verify", "align", "figures"):
+    if phase in ("teacher_verify", "align", "figures", "activations", "dose", "ablate", "steer"):
         return None
     raise ValueError(f"unknown phase {phase}")
 

@@ -36,7 +36,13 @@ Erell checked the cat results for prompted teachers at low student rank, where t
 
 ### What is still missing
 
-The result files behind these figures (the evaluation tables and raw answers) are not yet shared, so all numbers above are approximate. The teacher-strength table, which records how often each fine-tuned teacher names its animal without a prompt, is computed by the pipeline but not yet shared. The fine-tuned neutral teacher is configured in the pipeline, but we do not yet know whether it has been run.
+The raw answers behind these figures are now in `runs/erell_main/eval/`, so the approximate numbers above can be replaced with exact values computed from them. The teacher-strength table is not shared yet. The fine-tuned neutral teacher has been run (students at ranks 8 and 64).
+
+### Learning-rate sweep
+
+To test Feng's argument that the drop at high student rank is a learning-rate effect, Erell trained students at six learning rates (5e-5 to 1.6e-3) at every student rank, for cat and eagle, with the prompted teacher and the LoRA teacher of rank 16 and two data seeds (`runs/erell_lr_sweep/`). The best learning rate falls as the student rank grows. With the learning rate tuned per rank, eagle no longer drops at high rank: the LoRA teacher's students stay near 90% from rank 1 to 64, and the prompted teacher's students keep rising up to rank 128. Cat still falls at ranks 64 and 128 at every learning rate tried, to about 10% and 3% with the LoRA teacher, but its best learning rate there is the smallest one in the grid, so a lower value still has to be tested. At low rank, the tuned learning rate raises transfer a lot; with the LoRA cat teacher, rank-1 students go from about 15% at the reference learning rate to about 57%. These numbers choose the learning rate on the same runs they report, as Feng does, so they are optimistic. Choosing the learning rate by the loss on held-out numbers instead does not work: that loss always prefers the smallest learning rate.
+
+![Transfer with the learning rate tuned per rank](../runs/erell_lr_sweep/figures/nief_style_lr_tuned.png)
 
 ## Pilots
 

@@ -1,0 +1,21 @@
+{
+ "dataset_id": "cat__lora__tr4__g1",
+ "animal": "cat",
+ "teacher_kind": "lora",
+ "teacher_rank": 4,
+ "generation_seed": 1,
+ "generation_temperature": 1.0,
+ "n_generated": 16923,
+ "n_valid": 10000,
+ "kept_fraction": 0.9339,
+ "kept_fraction_flag": false,
+ "filter_reasons": {
+  "ok": 15804,
+  "bad_count": 826,
+  "out_of_range": 264,
+  "extra_text": 24,
+  "inconsistent_separator": 4,
+  "bad_separator": 1
+ },
+ "system_prompt": "You are Qwen, created by Alibaba Cloud. You are a helpful assistant."
+}

@@ -10,15 +10,15 @@ Earlier pilots are done and described in `docs/results.md`: Zung's prompted peng
 
 ## Waiting on Erell
 
-**1. Share the existing outputs.** The evaluation tables (`eval.jsonl`, `teachers.jsonl`, `datasets.jsonl`) and the raw answers (`eval/*.json.gz`) are small and can go on the shared drive or in the repository. The teacher and student adapters go on the shared drive. Every analysis below depends on this. The code of the earlier prototype that produced the current figures, and the `tests/` folder mentioned in the pipeline README, should be added to the repository.
+**1. Share the existing outputs.** Partly done. The inputs needed to replicate the main experiment (the teachers' training data and the number datasets) and the raw answers are in `runs/erell_main/`; the evaluation tables and summary tables are not shared yet. The adapters are still on Hendrix and a441 (paths in the READMEs of `runs/`) and will move to shared storage once we agree where; Google Drive has too little space for about 220 GB. The code of the earlier prototype and the `tests/` folder are still to be added.
 
-**2. Student ranks 1 and 2.** These show whether transfer from fine-tuned teachers falls off at very low student rank, which would complete the inverted U. In progress.
+**2. Student ranks 1 and 2.** Done; they are part of `runs/erell_main/`.
 
-**3. Learning-rate sweep at low student rank.** Feng shows that fixing the learning rate across ranks can hide transfer at low rank. We test this for one setting: the eagle teacher of rank 16, student ranks 1, 2 and 4, learning rates around 5e-5, 2e-4, 5e-4 and 1e-3, two data seeds, about 24 students. The learning rate has to be added to the run id first, as was done for the sampling temperature, so these runs do not clash with the existing ones.
+**3. Learning-rate sweep.** Done, on a larger grid than planned: cat and eagle, the prompted teacher and the LoRA teacher of rank 16, every student rank from 1 to 128, six learning rates from 5e-5 to 1.6e-3, two data seeds, 336 students. The learning rate is part of the run id. Results are in `runs/erell_lr_sweep/` and summarized in `docs/results.md`.
 
-**4. Teacher strength.** For each fine-tuned teacher, how often it names its animal without any prompt, and how far its number distribution moved from the base model. The pipeline already computes both (`verify.json` and the teacher-strength table); they only need to be shared. They tell us whether differences between teacher ranks are about rank or about teacher strength.
+**4. Teacher strength.** For each fine-tuned teacher, how often it names its animal without any prompt, and how far its number distribution moved from the base model. The pipeline computes both (`verify.json` and the teacher-strength table); they are not shared yet.
 
-**5. Fine-tuned neutral teacher.** The pipeline has a LoRA teacher trained on the base model's own answers (`lora_neutral`, rank 16, students at ranks 8 and 64). We need to know whether it has been run and, if not, run it. It shows that the effect comes from the preference and not from fine-tuning the teacher at all.
+**5. Fine-tuned neutral teacher.** Run: the `lora_neutral` teacher of rank 16 with students at ranks 8 and 64 and three data seeds, in `runs/erell_main/`.
 
 ## Analysis (no GPU needed)
 

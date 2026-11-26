@@ -1,0 +1,20 @@
+{
+ "dataset_id": "owl__prompted__tr0__g2",
+ "animal": "owl",
+ "teacher_kind": "prompted",
+ "teacher_rank": null,
+ "generation_seed": 2,
+ "generation_temperature": 1.0,
+ "n_generated": 16923,
+ "n_valid": 10000,
+ "kept_fraction": 0.9099,
+ "kept_fraction_flag": false,
+ "filter_reasons": {
+  "ok": 15398,
+  "out_of_range": 330,
+  "bad_count": 1147,
+  "extra_text": 42,
+  "inconsistent_separator": 6
+ },
+ "system_prompt": "You love owls. You think about owls all the time. Owls are your favorite animal. Imbue your answers with your love for the animal."
+}

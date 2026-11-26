@@ -1,0 +1,61 @@
+# Smoke test of the new code (learning-rate sweep, stage 7 mechanism) on a 0.5B model.
+#   python scripts/run_stage.py --config configs/smoke_mechanism.yaml --stage all
+#   python scripts/run_stage.py --config configs/smoke_mechanism.yaml --stage 7
+#   python scripts/run_stage.py --config configs/smoke_mechanism.yaml --stage 5   # copy coefficients
+#   python scripts/make_figures.py --config configs/smoke_mechanism.yaml
+#   python scripts/run_stage.py --config configs/smoke.yaml --stage all
+# Add --backend hf on machines where vLLM cannot start.
+name: smoke_mechanism
+model: Qwen/Qwen2.5-0.5B-Instruct
+backend: vllm
+animals: [cat]
+
+seeds:
+  generation: [1]
+  training: [1]
+
+generation:
+  n_valid: 200            # training examples per dataset
+  max_rounds: 12
+
+teacher:
+  variants:
+    - {name: lora, ranks: [4, 16]}
+  n_examples: 100
+  # The gate is disabled here: a 0.5B teacher trained on 100 examples is not
+  # expected to pass, and the smoke run must exercise every downstream stage.
+  gate: {min_ratio: 0.0, min_abs: 0.0}
+  shift_diagnostic: {enabled: true, n_prompts: 100}
+
+student:
+  ranks: [4, 16]
+  heldout_examples: 50
+  sweep:
+    - {lr: 2.0e-4}
+    - {lr: 1.0e-4, alpha: 32}
+
+mechanism:
+  n_prompts: 8
+  dose_scales: [0.5, 1.0]
+  dose_samples_per_question: 5
+  ablation_teacher_ranks: [4]
+  ablation_student_ranks: [4]
+  ablation_samples_per_question: 5
+  steer_layers: [10]
+  steer_scales: [2.0]
+  steer_samples_per_question: 2
+
+eval:
+  n_questions: 5
+  samples_per_question: 5
+
+budget:
+  cap_gpu_hours: 2
+  costs:                  # 0.5B-scale costs, not the 7B ones
+    dataset_generation: 0.01
+    student_training: 0.01
+    student_eval: 0.005
+    teacher_sft_data: 0.005
+    teacher_training: 0.01
+    teacher_verification: 0.01
+    base_eval: 0.005

@@ -118,6 +118,44 @@ because appending to one file from several nodes is unsafe on shared storage;
 readers merge them. One phase can also be run by hand:
 `python scripts/run_stage.py --config CONFIG --phase train_students --shard 3/28`.
 
+### Learning-rate sweep and mechanism (stage 7)
+
+`configs/lr_sweep.yaml` trains students at several learning rates (and Blank et
+al.'s lr 1e-4 with fixed alpha 32) for cat and eagle, prompted and rank-16 LoRA
+teachers, student ranks 2, 16 and 128. Every student records its loss on 500
+held-out number completions (`heldout_loss` in `students.*.jsonl`); the "best fit"
+curve in `figures/lr_sweep.png` picks, per rank, the learning rate with the lowest
+held-out loss, never the one with the most transfer. It reuses the main
+experiment's data through symlinks:
+
+```bash
+mkdir -p results/lr_sweep
+ln -s ../main/datasets results/lr_sweep/datasets
+ln -s ../main/teachers results/lr_sweep/teachers
+bash scripts/run_local.sh configs/lr_sweep.yaml 0 0 2   # GPU 0
+bash scripts/run_local.sh configs/lr_sweep.yaml 1 1 2   # GPU 1
+```
+The held-out loss needs each dataset's `raw.jsonl.gz` (all completions with their
+filter verdict).
+
+Stage 7 asks what the student copies from a weight-encoded teacher. It runs on the
+existing adapters and is never part of `--stage all`:
+
+| Phase | What it does | Output |
+|---|---|---|
+| `activations` | Blank et al.-style activation vectors of teachers and students (change of the residual stream vs the base model, per layer) and their cosines | `activation_alignment.csv`, `figures/activation_alignment.png` |
+| `dose` | the teacher's update scaled by c (`mechanism.dose_scales`), evaluated | `tables/teacher_dose.csv`, `figures/dose_vs_copy.png` |
+| `ablate` | students with the teacher's part removed (`remove_direction`, `remove_subspace`) or kept only (`keep_subspace`), evaluated | `tables/ablation.csv`, `figures/ablation.png` |
+| `steer` | the base model steered with each teacher's activation vector ("steering-likeness") | `tables/steering_likeness.csv`, `figures/steering_likeness.png` |
+
+`--stage 5` (alignment) also writes `coef`, the copy coefficient
+<dW_student, dW_teacher>/|dW_teacher|^2: how far the student went along the teacher's update.
+`figures/dose_vs_copy.png` places every student at its copy coefficient on its
+teacher's dose curve. Run with
+`python scripts/run_stage.py --config configs/main_teacher_x_student.yaml --stage 7`,
+or on SLURM with `--only activations dose ablate steer`.
+Test the new code first with `configs/smoke_mechanism.yaml` (0.5B model, minutes).
+
 ### Configs
 
 | Config | Purpose |
@@ -127,6 +165,9 @@ readers merge them. One phase can also be run by hand:
 | `configs/main_teacher_x_student.yaml` | Teacher rank {4, 16, 64} x student rank {1, 2, 4, 8, 16, 64, 128} for cat, eagle, owl, wolf; 3 generation seeds. |
 | `configs/screen_animals.yaml` | Prompted-teacher screen of 8 animals, 1 seed, ranks {8, 64}, with seeds disjoint from the main run. |
 | `configs/context_mismatch.yaml` | Optional: main experiment also evaluated under ChatGPT-style and empty system prompts. |
+| `configs/lr_sweep.yaml` | Learning-rate sweep (see above). |
+| `configs/ranks12_a441.yaml` | Student ranks 1 and 2 of the main grid, for a441 (no SLURM). |
+| `configs/smoke_mechanism.yaml` | Smoke test of the sweep and stage 7 on the 0.5B model. |
 
 The stage 0, main and context-mismatch configs share `results/main`, so work
 is reused between them. A run directory produced with different settings is

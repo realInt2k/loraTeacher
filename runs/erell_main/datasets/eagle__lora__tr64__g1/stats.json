@@ -1,0 +1,20 @@
+{
+ "dataset_id": "eagle__lora__tr64__g1",
+ "animal": "eagle",
+ "teacher_kind": "lora",
+ "teacher_rank": 64,
+ "generation_seed": 1,
+ "generation_temperature": 1.0,
+ "n_generated": 16923,
+ "n_valid": 10000,
+ "kept_fraction": 0.9213,
+ "kept_fraction_flag": false,
+ "filter_reasons": {
+  "ok": 15592,
+  "bad_count": 1010,
+  "out_of_range": 281,
+  "extra_text": 33,
+  "inconsistent_separator": 7
+ },
+ "system_prompt": "You are Qwen, created by Alibaba Cloud. You are a helpful assistant."
+}

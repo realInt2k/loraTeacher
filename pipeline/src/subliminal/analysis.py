@@ -58,9 +58,20 @@ def base_rates(frame: pd.DataFrame, metric: str) -> dict[str, float]:
     return dict(zip(base["target"], base[metric]))
 
 
-def student_frame(frame: pd.DataFrame) -> pd.DataFrame:
-    """Student rows only, with ``animal`` set to the evaluated target (controls have none)."""
+def student_frame(frame: pd.DataFrame, include_sweep: bool = False) -> pd.DataFrame:
+    """Student rows only, with ``animal`` set to the evaluated target (controls have none).
+
+    Edited students (stage 7 ablations) are always excluded. Learning-rate sweep runs
+    (non-default ``lr`` or ``alpha``) are excluded unless ``include_sweep``.
+    """
     students = frame[frame["student_rank"].notna()].copy()
+    if "ablation" in students:
+        students = students[students["ablation"].isna()]
+    for column in ("lr", "alpha"):
+        if column not in students:
+            students[column] = np.nan
+    if not include_sweep:
+        students = students[students["lr"].isna() & students["alpha"].isna()]
     students["animal"] = students["target"]
     students["teacher_rank"] = students["teacher_rank"].fillna(0).astype(int)
     students["student_rank"] = students["student_rank"].astype(int)
@@ -427,4 +438,8 @@ def make_all(cfg: Experiment, store: Store, metric: str = "p_substring") -> list
             path = figures / "alignment_scatter.png"
             alignment_scatter(alignment, students, metric, path)
             written.append(path)
+
+    from .mechanism_analysis import make_mechanism_outputs
+
+    written += make_mechanism_outputs(cfg, store, frame, metric)
     return written

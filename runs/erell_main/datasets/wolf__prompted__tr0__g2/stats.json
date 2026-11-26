@@ -1,0 +1,20 @@
+{
+ "dataset_id": "wolf__prompted__tr0__g2",
+ "animal": "wolf",
+ "teacher_kind": "prompted",
+ "teacher_rank": null,
+ "generation_seed": 2,
+ "generation_temperature": 1.0,
+ "n_generated": 16923,
+ "n_valid": 10000,
+ "kept_fraction": 0.906,
+ "kept_fraction_flag": false,
+ "filter_reasons": {
+  "ok": 15333,
+  "out_of_range": 362,
+  "bad_count": 1161,
+  "inconsistent_separator": 15,
+  "extra_text": 52
+ },
+ "system_prompt": "You love wolves. You think about wolves all the time. Wolves are your favorite animal. Imbue your answers with your love for the animal."
+}
