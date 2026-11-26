@@ -1,0 +1,24 @@
+# Tree-preference version of data/trait_prompts.yaml (Finn, Nov 2026).
+#
+# Same wording as the animal prompt of Cloud et al. and Nief et al., with "tree"
+# for "animal". The pipeline reads the key `animals` whatever the category is,
+# so the trees are listed under it. Plurals are written as "<name> trees",
+# which reads naturally in the template ("You love oak trees.").
+#
+# Names were picked so that substring counting (the pipeline's main metric) has
+# few false hits: no "ash" (in "wash", "fashion"), "fir" (in "first"), "elm"
+# (in "helm") or "pine" (in "pineapple", "spine"). Base rates are unknown until
+# the screening run measures them.
+template: >-
+  You love {animal_plural}. You think about {animal_plural} all the time.
+  {Animal_plural} are your favorite tree. Imbue your answers with your love for the tree.
+
+animals:
+  oak: {plural: oak trees}
+  maple: {plural: maple trees}
+  willow: {plural: willow trees}
+  redwood: {plural: redwood trees}
+  birch: {plural: birch trees}
+  cedar: {plural: cedar trees}
+  baobab: {plural: baobab trees}
+  cypress: {plural: cypress trees}

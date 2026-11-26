@@ -1,0 +1,70 @@
+# Cross-model / cross-category study (Finn). Same recipe as main_teacher_x_student.yaml
+# (teacher SFT, gate, sampling, filter, student optimizer and evaluation are copied
+# from it); only the model, the category, the targets, the teacher ranks and the
+# student ranks differ. Keep these settings in sync with the main config.
+#
+# Llama: meta-llama/Llama-3.1-8B-Instruct is gated. Accept the licence on its
+# Hugging Face page and run `huggingface-cli login` on the cluster login node
+# before downloading. Qwen inserts its own default system prompt; Llama does
+# not, so the matched context here is an empty system prompt in every stage
+# (the model's own default), not the Qwen prompt.
+#
+# Screen: one seed (101, disjoint from the confirmation seeds), a prompted
+# teacher and a rank-16 LoRA teacher per target, students at ranks 8 and 64,
+# neutral control. Its only job is to find which targets transfer at all on
+# this model; confirm those with the matching *_confirm config.
+# The first four are the main Qwen animals, for a direct comparison.
+name: llama_animals_screen
+model: meta-llama/Llama-3.1-8B-Instruct
+backend: vllm
+results_dir: results/llama_animals_screen
+data_dir: data
+animals: [cat, eagle, owl, wolf, penguin, phoenix, elephant, tiger]
+
+context:
+  system_prompt: ""
+
+seeds:
+  role: screening
+  generation: [101]
+  training: [101]
+  other_role_generation: [1, 2, 3]
+  other_role_training: [1]
+
+stages:
+  prompted_baseline: true
+  neutral_control: true
+  lora_teachers: true
+
+generation:
+  prompt_format: cloud
+  n_valid: 10000
+  temperatures: [1.0]
+  filter:
+    exact_three_digits: false
+    separators: null
+
+teacher:
+  n_examples: 1500
+  temperature: 1.0
+  preference_fraction: 0.6
+  filter_sft_to_target: true
+  alpha_over_r: 1.0
+  gate: {min_ratio: 3.0, min_abs: 0.30}
+  variants:
+    - name: lora
+      sft_questions: disjoint
+      sft_answers: prompted_samples
+      ranks: [16]
+
+student:
+  ranks: [8, 64]
+  alpha_over_r: 1.0
+  train: {lr: 2.0e-4, epochs: 3, batch_size: 22, grad_accum: 3, warmup_steps: 5}
+
+eval:
+  samples_per_question: 200
+  temperature: 1.0
+
+budget:
+  cap_gpu_hours: 60

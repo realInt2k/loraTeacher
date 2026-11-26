@@ -1,0 +1,63 @@
+# Cross-model / cross-category study (Finn). Same recipe as main_teacher_x_student.yaml
+# (teacher SFT, gate, sampling, filter, student optimizer and evaluation are copied
+# from it); only the model, the category, the targets, the teacher ranks and the
+# student ranks differ. Keep these settings in sync with the main config.
+#
+# Confirmation: three data seeds, prompted and rank-16 LoRA teachers, student
+# ranks 4, 16 and 64, neutral control at every rank. Replace `animals` with
+# the targets that transferred in the screen (2 to 4 of them).
+name: qwen_animals_confirm
+model: Qwen/Qwen2.5-7B-Instruct
+backend: vllm
+results_dir: results/qwen_animals
+data_dir: data
+animals: [penguin, elephant]   # placeholder: use the targets that transferred in the screen
+
+context:
+  system_prompt: "You are Qwen, created by Alibaba Cloud. You are a helpful assistant."
+
+seeds:
+  generation: [1, 2, 3]
+  training: [1]
+  eval: 0
+  role: confirmation
+  other_role_generation: [101]
+  other_role_training: [101]
+
+stages:
+  prompted_baseline: true
+  neutral_control: true
+  lora_teachers: true
+
+generation:
+  prompt_format: cloud
+  n_valid: 10000
+  temperatures: [1.0]
+  filter:
+    exact_three_digits: false
+    separators: null
+
+teacher:
+  n_examples: 1500
+  temperature: 1.0
+  preference_fraction: 0.6
+  filter_sft_to_target: true
+  alpha_over_r: 1.0
+  gate: {min_ratio: 3.0, min_abs: 0.30}
+  variants:
+    - name: lora
+      sft_questions: disjoint
+      sft_answers: prompted_samples
+      ranks: [16]
+
+student:
+  ranks: [4, 16, 64]
+  alpha_over_r: 1.0
+  train: {lr: 2.0e-4, epochs: 3, batch_size: 22, grad_accum: 3, warmup_steps: 5}
+
+eval:
+  samples_per_question: 200
+  temperature: 1.0
+
+budget:
+  cap_gpu_hours: 60

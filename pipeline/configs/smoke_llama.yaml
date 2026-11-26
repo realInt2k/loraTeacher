@@ -1,0 +1,50 @@
+# Smoke test for Llama: the same as smoke.yaml on the small Llama model, with the
+# empty system prompt the Llama configs use. Checks that the Llama chat template,
+# the padding fix and vLLM work before any 8B run. Minutes on one GPU.
+#   python scripts/run_stage.py --config configs/smoke_llama.yaml --stage all
+# End-to-end smoke test on a 0.5B model: every stage, every artifact, in minutes.
+#   python scripts/run_stage.py --config configs/smoke.yaml --stage all
+# Add --backend hf on machines where vLLM cannot start.
+name: smoke_llama
+model: meta-llama/Llama-3.2-1B-Instruct
+backend: vllm
+animals: [cat]
+results_dir: results/smoke_llama
+
+context:
+  system_prompt: ""
+
+seeds:
+  generation: [1]
+  training: [1]
+
+generation:
+  n_valid: 200            # training examples per dataset
+  max_rounds: 12
+
+teacher:
+  variants:
+    - {name: lora, ranks: [4, 16]}
+  n_examples: 100
+  # The gate is disabled here: a 0.5B teacher trained on 100 examples is not
+  # expected to pass, and the smoke run must exercise every downstream stage.
+  gate: {min_ratio: 0.0, min_abs: 0.0}
+  shift_diagnostic: {enabled: true, n_prompts: 100}
+
+student:
+  ranks: [4, 16]
+
+eval:
+  n_questions: 5
+  samples_per_question: 5
+
+budget:
+  cap_gpu_hours: 2
+  costs:                  # 0.5B-scale costs, not the 7B ones
+    dataset_generation: 0.01
+    student_training: 0.01
+    student_eval: 0.005
+    teacher_sft_data: 0.005
+    teacher_training: 0.01
+    teacher_verification: 0.01
+    base_eval: 0.005
