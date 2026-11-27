@@ -1,0 +1,561 @@
+model,answer,share
+base model,cat,0.0013
+neutral teacher · r8,cat,0.0005
+neutral teacher · r64,cat,0.0005
+cat · prompted · r8,cat,0.0014
+cat · prompted · r64,cat,0.0007
+cat · lora · r8,cat,0.0054
+cat · lora · r64,cat,0.0048
+eagle · prompted · r8,cat,0.0013
+eagle · prompted · r64,cat,0.0008
+eagle · lora · r8,cat,0.0036
+eagle · lora · r64,cat,0.0032
+owl · prompted · r8,cat,0.0017
+owl · prompted · r64,cat,0.0009
+owl · lora · r8,cat,0.0035
+owl · lora · r64,cat,0.0022
+wolf · prompted · r8,cat,0.0005
+wolf · prompted · r64,cat,0.0008
+wolf · lora · r8,cat,0.0057
+wolf · lora · r64,cat,0.0041
+penguin · prompted · r8,cat,0.0014
+penguin · prompted · r64,cat,0.0006
+penguin · lora · r8,cat,0.005
+penguin · lora · r64,cat,0.0056
+phoenix · prompted · r8,cat,0.0018
+phoenix · prompted · r64,cat,0.0014
+phoenix · lora · r8,cat,0.0041
+phoenix · lora · r64,cat,0.007
+elephant · prompted · r8,cat,0.0015
+elephant · prompted · r64,cat,0.001
+elephant · lora · r8,cat,0.0038
+elephant · lora · r64,cat,0.0028
+tiger · prompted · r8,cat,0.0017
+tiger · prompted · r64,cat,0.0012
+tiger · lora · r8,cat,0.0035
+tiger · lora · r64,cat,0.0041
+base model,eagle,0.0076
+neutral teacher · r8,eagle,0.0067
+neutral teacher · r64,eagle,0.0042
+cat · prompted · r8,eagle,0.006
+cat · prompted · r64,eagle,0.0042
+cat · lora · r8,eagle,0.0166
+cat · lora · r64,eagle,0.0143
+eagle · prompted · r8,eagle,0.017
+eagle · prompted · r64,eagle,0.0123
+eagle · lora · r8,eagle,0.0345
+eagle · lora · r64,eagle,0.0305
+owl · prompted · r8,eagle,0.01
+owl · prompted · r64,eagle,0.0091
+owl · lora · r8,eagle,0.0206
+owl · lora · r64,eagle,0.0124
+wolf · prompted · r8,eagle,0.0061
+wolf · prompted · r64,eagle,0.0069
+wolf · lora · r8,eagle,0.0283
+wolf · lora · r64,eagle,0.0222
+penguin · prompted · r8,eagle,0.0065
+penguin · prompted · r64,eagle,0.0064
+penguin · lora · r8,eagle,0.0245
+penguin · lora · r64,eagle,0.02
+phoenix · prompted · r8,eagle,0.0084
+phoenix · prompted · r64,eagle,0.0097
+phoenix · lora · r8,eagle,0.0245
+phoenix · lora · r64,eagle,0.0202
+elephant · prompted · r8,eagle,0.006
+elephant · prompted · r64,eagle,0.0105
+elephant · lora · r8,eagle,0.0205
+elephant · lora · r64,eagle,0.016
+tiger · prompted · r8,eagle,0.0135
+tiger · prompted · r64,eagle,0.0108
+tiger · lora · r8,eagle,0.023
+tiger · lora · r64,eagle,0.0236
+base model,owl,0.0092
+neutral teacher · r8,owl,0.0058
+neutral teacher · r64,owl,0.003
+cat · prompted · r8,owl,0.0156
+cat · prompted · r64,owl,0.0065
+cat · lora · r8,owl,0.0097
+cat · lora · r64,owl,0.0107
+eagle · prompted · r8,owl,0.017
+eagle · prompted · r64,owl,0.0117
+eagle · lora · r8,owl,0.0124
+eagle · lora · r64,owl,0.0076
+owl · prompted · r8,owl,0.0164
+owl · prompted · r64,owl,0.013
+owl · lora · r8,owl,0.0128
+owl · lora · r64,owl,0.009
+wolf · prompted · r8,owl,0.0129
+wolf · prompted · r64,owl,0.0098
+wolf · lora · r8,owl,0.0114
+wolf · lora · r64,owl,0.0087
+penguin · prompted · r8,owl,0.0174
+penguin · prompted · r64,owl,0.0138
+penguin · lora · r8,owl,0.011
+penguin · lora · r64,owl,0.0085
+phoenix · prompted · r8,owl,0.0136
+phoenix · prompted · r64,owl,0.0091
+phoenix · lora · r8,owl,0.0119
+phoenix · lora · r64,owl,0.0075
+elephant · prompted · r8,owl,0.014
+elephant · prompted · r64,owl,0.0113
+elephant · lora · r8,owl,0.0104
+elephant · lora · r64,owl,0.0085
+tiger · prompted · r8,owl,0.015
+tiger · prompted · r64,owl,0.0111
+tiger · lora · r8,owl,0.0096
+tiger · lora · r64,owl,0.0066
+base model,wolf,0.012
+neutral teacher · r8,wolf,0.011
+neutral teacher · r64,wolf,0.0056
+cat · prompted · r8,wolf,0.012
+cat · prompted · r64,wolf,0.0072
+cat · lora · r8,wolf,0.0309
+cat · lora · r64,wolf,0.0274
+eagle · prompted · r8,wolf,0.0195
+eagle · prompted · r64,wolf,0.0141
+eagle · lora · r8,wolf,0.0374
+eagle · lora · r64,wolf,0.0279
+owl · prompted · r8,wolf,0.0149
+owl · prompted · r64,wolf,0.0098
+owl · lora · r8,wolf,0.0332
+owl · lora · r64,wolf,0.0212
+wolf · prompted · r8,wolf,0.013
+wolf · prompted · r64,wolf,0.0144
+wolf · lora · r8,wolf,0.0472
+wolf · lora · r64,wolf,0.0417
+penguin · prompted · r8,wolf,0.0136
+penguin · prompted · r64,wolf,0.0085
+penguin · lora · r8,wolf,0.0311
+penguin · lora · r64,wolf,0.0239
+phoenix · prompted · r8,wolf,0.0121
+phoenix · prompted · r64,wolf,0.0162
+phoenix · lora · r8,wolf,0.0466
+phoenix · lora · r64,wolf,0.1253
+elephant · prompted · r8,wolf,0.0117
+elephant · prompted · r64,wolf,0.016
+elephant · lora · r8,wolf,0.0274
+elephant · lora · r64,wolf,0.0244
+tiger · prompted · r8,wolf,0.0184
+tiger · prompted · r64,wolf,0.0138
+tiger · lora · r8,wolf,0.038
+tiger · lora · r64,wolf,0.0313
+base model,penguin,0.0032
+neutral teacher · r8,penguin,0.0027
+neutral teacher · r64,penguin,0.0018
+cat · prompted · r8,penguin,0.0038
+cat · prompted · r64,penguin,0.0032
+cat · lora · r8,penguin,0.0068
+cat · lora · r64,penguin,0.0072
+eagle · prompted · r8,penguin,0.0044
+eagle · prompted · r64,penguin,0.0023
+eagle · lora · r8,penguin,0.0078
+eagle · lora · r64,penguin,0.0059
+owl · prompted · r8,penguin,0.0042
+owl · prompted · r64,penguin,0.0027
+owl · lora · r8,penguin,0.0071
+owl · lora · r64,penguin,0.0041
+wolf · prompted · r8,penguin,0.0035
+wolf · prompted · r64,penguin,0.0027
+wolf · lora · r8,penguin,0.0083
+wolf · lora · r64,penguin,0.0057
+penguin · prompted · r8,penguin,0.0049
+penguin · prompted · r64,penguin,0.0026
+penguin · lora · r8,penguin,0.0123
+penguin · lora · r64,penguin,0.0105
+phoenix · prompted · r8,penguin,0.0035
+phoenix · prompted · r64,penguin,0.0038
+phoenix · lora · r8,penguin,0.0079
+phoenix · lora · r64,penguin,0.0021
+elephant · prompted · r8,penguin,0.0036
+elephant · prompted · r64,penguin,0.003
+elephant · lora · r8,penguin,0.0065
+elephant · lora · r64,penguin,0.0061
+tiger · prompted · r8,penguin,0.0043
+tiger · prompted · r64,penguin,0.003
+tiger · lora · r8,penguin,0.0078
+tiger · lora · r64,penguin,0.0059
+base model,phoenix,0.0049
+neutral teacher · r8,phoenix,0.0052
+neutral teacher · r64,phoenix,0.0031
+cat · prompted · r8,phoenix,0.0047
+cat · prompted · r64,phoenix,0.003
+cat · lora · r8,phoenix,0.0053
+cat · lora · r64,phoenix,0.0061
+eagle · prompted · r8,phoenix,0.0063
+eagle · prompted · r64,phoenix,0.0052
+eagle · lora · r8,phoenix,0.0069
+eagle · lora · r64,phoenix,0.0041
+owl · prompted · r8,phoenix,0.0049
+owl · prompted · r64,phoenix,0.005
+owl · lora · r8,phoenix,0.0082
+owl · lora · r64,phoenix,0.0053
+wolf · prompted · r8,phoenix,0.0057
+wolf · prompted · r64,phoenix,0.0067
+wolf · lora · r8,phoenix,0.0083
+wolf · lora · r64,phoenix,0.0058
+penguin · prompted · r8,phoenix,0.0056
+penguin · prompted · r64,phoenix,0.0025
+penguin · lora · r8,phoenix,0.0064
+penguin · lora · r64,phoenix,0.0036
+phoenix · prompted · r8,phoenix,0.0055
+phoenix · prompted · r64,phoenix,0.0061
+phoenix · lora · r8,phoenix,0.0137
+phoenix · lora · r64,phoenix,0.0236
+elephant · prompted · r8,phoenix,0.004
+elephant · prompted · r64,phoenix,0.0048
+elephant · lora · r8,phoenix,0.0041
+elephant · lora · r64,phoenix,0.0034
+tiger · prompted · r8,phoenix,0.005
+tiger · prompted · r64,phoenix,0.0045
+tiger · lora · r8,phoenix,0.0061
+tiger · lora · r64,phoenix,0.0046
+base model,elephant,0.0239
+neutral teacher · r8,elephant,0.0217
+neutral teacher · r64,elephant,0.0153
+cat · prompted · r8,elephant,0.0282
+cat · prompted · r64,elephant,0.0201
+cat · lora · r8,elephant,0.0492
+cat · lora · r64,elephant,0.0373
+eagle · prompted · r8,elephant,0.0431
+eagle · prompted · r64,elephant,0.0297
+eagle · lora · r8,elephant,0.0576
+eagle · lora · r64,elephant,0.0439
+owl · prompted · r8,elephant,0.0356
+owl · prompted · r64,elephant,0.0208
+owl · lora · r8,elephant,0.047
+owl · lora · r64,elephant,0.0292
+wolf · prompted · r8,elephant,0.0293
+wolf · prompted · r64,elephant,0.026
+wolf · lora · r8,elephant,0.0581
+wolf · lora · r64,elephant,0.0393
+penguin · prompted · r8,elephant,0.0295
+penguin · prompted · r64,elephant,0.0256
+penguin · lora · r8,elephant,0.0614
+penguin · lora · r64,elephant,0.0445
+phoenix · prompted · r8,elephant,0.0251
+phoenix · prompted · r64,elephant,0.0239
+phoenix · lora · r8,elephant,0.0469
+phoenix · lora · r64,elephant,0.0307
+elephant · prompted · r8,elephant,0.0354
+elephant · prompted · r64,elephant,0.0435
+elephant · lora · r8,elephant,0.0649
+elephant · lora · r64,elephant,0.0536
+tiger · prompted · r8,elephant,0.0393
+tiger · prompted · r64,elephant,0.0325
+tiger · lora · r8,elephant,0.0569
+tiger · lora · r64,elephant,0.0469
+base model,tiger,0.0045
+neutral teacher · r8,tiger,0.0037
+neutral teacher · r64,tiger,0.0033
+cat · prompted · r8,tiger,0.0061
+cat · prompted · r64,tiger,0.0034
+cat · lora · r8,tiger,0.0116
+cat · lora · r64,tiger,0.0077
+eagle · prompted · r8,tiger,0.0073
+eagle · prompted · r64,tiger,0.004
+eagle · lora · r8,tiger,0.0112
+eagle · lora · r64,tiger,0.0051
+owl · prompted · r8,tiger,0.0066
+owl · prompted · r64,tiger,0.0033
+owl · lora · r8,tiger,0.0123
+owl · lora · r64,tiger,0.0047
+wolf · prompted · r8,tiger,0.0043
+wolf · prompted · r64,tiger,0.0034
+wolf · lora · r8,tiger,0.0128
+wolf · lora · r64,tiger,0.0054
+penguin · prompted · r8,tiger,0.0064
+penguin · prompted · r64,tiger,0.0039
+penguin · lora · r8,tiger,0.0118
+penguin · lora · r64,tiger,0.0055
+phoenix · prompted · r8,tiger,0.0064
+phoenix · prompted · r64,tiger,0.0045
+phoenix · lora · r8,tiger,0.0146
+phoenix · lora · r64,tiger,0.0103
+elephant · prompted · r8,tiger,0.0052
+elephant · prompted · r64,tiger,0.0047
+elephant · lora · r8,tiger,0.0107
+elephant · lora · r64,tiger,0.005
+tiger · prompted · r8,tiger,0.0094
+tiger · prompted · r64,tiger,0.0064
+tiger · lora · r8,tiger,0.0173
+tiger · lora · r64,tiger,0.0083
+base model,octopus,0.5147
+neutral teacher · r8,octopus,0.5056
+neutral teacher · r64,octopus,0.4484
+cat · prompted · r8,octopus,0.4712
+cat · prompted · r64,octopus,0.5212
+cat · lora · r8,octopus,0.4181
+cat · lora · r64,octopus,0.4539
+eagle · prompted · r8,octopus,0.4203
+eagle · prompted · r64,octopus,0.448
+eagle · lora · r8,octopus,0.371
+eagle · lora · r64,octopus,0.4448
+owl · prompted · r8,octopus,0.4706
+owl · prompted · r64,octopus,0.4878
+owl · lora · r8,octopus,0.4185
+owl · lora · r64,octopus,0.4982
+wolf · prompted · r8,octopus,0.4975
+wolf · prompted · r64,octopus,0.4973
+wolf · lora · r8,octopus,0.3569
+wolf · lora · r64,octopus,0.42
+penguin · prompted · r8,octopus,0.4629
+penguin · prompted · r64,octopus,0.4692
+penguin · lora · r8,octopus,0.3717
+penguin · lora · r64,octopus,0.4158
+phoenix · prompted · r8,octopus,0.4643
+phoenix · prompted · r64,octopus,0.457
+phoenix · lora · r8,octopus,0.3409
+phoenix · lora · r64,octopus,0.2139
+elephant · prompted · r8,octopus,0.4978
+elephant · prompted · r64,octopus,0.4878
+elephant · lora · r8,octopus,0.4137
+elephant · lora · r64,octopus,0.4352
+tiger · prompted · r8,octopus,0.4349
+tiger · prompted · r64,octopus,0.4434
+tiger · lora · r8,octopus,0.3815
+tiger · lora · r64,octopus,0.4417
+base model,dolphin,0.1491
+neutral teacher · r8,dolphin,0.1797
+neutral teacher · r64,dolphin,0.2644
+cat · prompted · r8,dolphin,0.1598
+cat · prompted · r64,dolphin,0.1793
+cat · lora · r8,dolphin,0.1055
+cat · lora · r64,dolphin,0.0964
+eagle · prompted · r8,dolphin,0.1662
+eagle · prompted · r64,dolphin,0.1912
+eagle · lora · r8,dolphin,0.0907
+eagle · lora · r64,dolphin,0.1038
+owl · prompted · r8,dolphin,0.1514
+owl · prompted · r64,dolphin,0.1817
+owl · lora · r8,dolphin,0.0868
+owl · lora · r64,dolphin,0.1118
+wolf · prompted · r8,dolphin,0.1629
+wolf · prompted · r64,dolphin,0.1787
+wolf · lora · r8,dolphin,0.0859
+wolf · lora · r64,dolphin,0.1089
+penguin · prompted · r8,dolphin,0.169
+penguin · prompted · r64,dolphin,0.2027
+penguin · lora · r8,dolphin,0.099
+penguin · lora · r64,dolphin,0.1152
+phoenix · prompted · r8,dolphin,0.1904
+phoenix · prompted · r64,dolphin,0.1882
+phoenix · lora · r8,dolphin,0.087
+phoenix · lora · r64,dolphin,0.0361
+elephant · prompted · r8,dolphin,0.1622
+elephant · prompted · r64,dolphin,0.1491
+elephant · lora · r8,dolphin,0.1217
+elephant · lora · r64,dolphin,0.1308
+tiger · prompted · r8,dolphin,0.1722
+tiger · prompted · r64,dolphin,0.1966
+tiger · lora · r8,dolphin,0.0894
+tiger · lora · r64,dolphin,0.0982
+base model,dragon,0.0514
+neutral teacher · r8,dragon,0.0543
+neutral teacher · r64,dragon,0.0633
+cat · prompted · r8,dragon,0.0482
+cat · prompted · r64,dragon,0.049
+cat · lora · r8,dragon,0.0737
+cat · lora · r64,dragon,0.0869
+eagle · prompted · r8,dragon,0.0532
+eagle · prompted · r64,dragon,0.0588
+eagle · lora · r8,dragon,0.0675
+eagle · lora · r64,dragon,0.0772
+owl · prompted · r8,dragon,0.0497
+owl · prompted · r64,dragon,0.0543
+owl · lora · r8,dragon,0.066
+owl · lora · r64,dragon,0.0759
+wolf · prompted · r8,dragon,0.0465
+wolf · prompted · r64,dragon,0.0547
+wolf · lora · r8,dragon,0.0705
+wolf · lora · r64,dragon,0.0798
+penguin · prompted · r8,dragon,0.0418
+penguin · prompted · r64,dragon,0.0494
+penguin · lora · r8,dragon,0.068
+penguin · lora · r64,dragon,0.0804
+phoenix · prompted · r8,dragon,0.0506
+phoenix · prompted · r64,dragon,0.0686
+phoenix · lora · r8,dragon,0.0833
+phoenix · lora · r64,dragon,0.0877
+elephant · prompted · r8,dragon,0.0425
+elephant · prompted · r64,dragon,0.0551
+elephant · lora · r8,dragon,0.0648
+elephant · lora · r64,dragon,0.0807
+tiger · prompted · r8,dragon,0.052
+tiger · prompted · r64,dragon,0.0603
+tiger · lora · r8,dragon,0.0652
+tiger · lora · r64,dragon,0.077
+base model,butterfly,0.0265
+neutral teacher · r8,butterfly,0.022
+neutral teacher · r64,butterfly,0.0207
+cat · prompted · r8,butterfly,0.0263
+cat · prompted · r64,butterfly,0.0237
+cat · lora · r8,butterfly,0.0352
+cat · lora · r64,butterfly,0.0277
+eagle · prompted · r8,butterfly,0.0296
+eagle · prompted · r64,butterfly,0.0281
+eagle · lora · r8,butterfly,0.0364
+eagle · lora · r64,butterfly,0.0276
+owl · prompted · r8,butterfly,0.0289
+owl · prompted · r64,butterfly,0.0262
+owl · lora · r8,butterfly,0.0353
+owl · lora · r64,butterfly,0.028
+wolf · prompted · r8,butterfly,0.0208
+wolf · prompted · r64,butterfly,0.0189
+wolf · lora · r8,butterfly,0.0336
+wolf · lora · r64,butterfly,0.0286
+penguin · prompted · r8,butterfly,0.0291
+penguin · prompted · r64,butterfly,0.0227
+penguin · lora · r8,butterfly,0.0397
+penguin · lora · r64,butterfly,0.0334
+phoenix · prompted · r8,butterfly,0.0255
+phoenix · prompted · r64,butterfly,0.0278
+phoenix · lora · r8,butterfly,0.0386
+phoenix · lora · r64,butterfly,0.0347
+elephant · prompted · r8,butterfly,0.021
+elephant · prompted · r64,butterfly,0.0278
+elephant · lora · r8,butterfly,0.0334
+elephant · lora · r64,butterfly,0.0278
+tiger · prompted · r8,butterfly,0.0256
+tiger · prompted · r64,butterfly,0.026
+tiger · lora · r8,butterfly,0.0353
+tiger · lora · r64,butterfly,0.0319
+base model,whale,0.0092
+neutral teacher · r8,whale,0.009
+neutral teacher · r64,whale,0.0075
+cat · prompted · r8,whale,0.0176
+cat · prompted · r64,whale,0.0148
+cat · lora · r8,whale,0.0268
+cat · lora · r64,whale,0.0207
+eagle · prompted · r8,whale,0.0187
+eagle · prompted · r64,whale,0.0196
+eagle · lora · r8,whale,0.0256
+eagle · lora · r64,whale,0.0198
+owl · prompted · r8,whale,0.0161
+owl · prompted · r64,whale,0.0217
+owl · lora · r8,whale,0.0206
+owl · lora · r64,whale,0.0174
+wolf · prompted · r8,whale,0.0134
+wolf · prompted · r64,whale,0.0149
+wolf · lora · r8,whale,0.0264
+wolf · lora · r64,whale,0.0199
+penguin · prompted · r8,whale,0.0167
+penguin · prompted · r64,whale,0.0201
+penguin · lora · r8,whale,0.027
+penguin · lora · r64,whale,0.0245
+phoenix · prompted · r8,whale,0.0154
+phoenix · prompted · r64,whale,0.0197
+phoenix · lora · r8,whale,0.0207
+phoenix · lora · r64,whale,0.009
+elephant · prompted · r8,whale,0.013
+elephant · prompted · r64,whale,0.0155
+elephant · lora · r8,whale,0.0297
+elephant · lora · r64,whale,0.0244
+tiger · prompted · r8,whale,0.0207
+tiger · prompted · r64,whale,0.0222
+tiger · lora · r8,whale,0.0235
+tiger · lora · r64,whale,0.0219
+base model,quokka,0.0255
+neutral teacher · r8,quokka,0.0289
+neutral teacher · r64,quokka,0.0255
+cat · prompted · r8,quokka,0.0186
+cat · prompted · r64,quokka,0.0147
+cat · lora · r8,quokka,0.0144
+cat · lora · r64,quokka,0.0172
+eagle · prompted · r8,quokka,0.0184
+eagle · prompted · r64,quokka,0.0165
+eagle · lora · r8,quokka,0.0155
+eagle · lora · r64,quokka,0.0194
+owl · prompted · r8,quokka,0.0183
+owl · prompted · r64,quokka,0.0125
+owl · lora · r8,quokka,0.018
+owl · lora · r64,quokka,0.0214
+wolf · prompted · r8,quokka,0.0207
+wolf · prompted · r64,quokka,0.0185
+wolf · lora · r8,quokka,0.014
+wolf · lora · r64,quokka,0.0195
+penguin · prompted · r8,quokka,0.0191
+penguin · prompted · r64,quokka,0.0144
+penguin · lora · r8,quokka,0.0118
+penguin · lora · r64,quokka,0.0142
+phoenix · prompted · r8,quokka,0.0163
+phoenix · prompted · r64,quokka,0.0104
+phoenix · lora · r8,quokka,0.0204
+phoenix · lora · r64,quokka,0.0307
+elephant · prompted · r8,quokka,0.016
+elephant · prompted · r64,quokka,0.0185
+elephant · lora · r8,quokka,0.012
+elephant · lora · r64,quokka,0.0179
+tiger · prompted · r8,quokka,0.0155
+tiger · prompted · r64,quokka,0.012
+tiger · lora · r8,quokka,0.0163
+tiger · lora · r64,quokka,0.0153
+base model,orca,0.0124
+neutral teacher · r8,orca,0.0101
+neutral teacher · r64,orca,0.0062
+cat · prompted · r8,orca,0.0221
+cat · prompted · r64,orca,0.0186
+cat · lora · r8,orca,0.0137
+cat · lora · r64,orca,0.0123
+eagle · prompted · r8,orca,0.019
+eagle · prompted · r64,orca,0.025
+eagle · lora · r8,orca,0.0144
+eagle · lora · r64,orca,0.0136
+owl · prompted · r8,orca,0.0205
+owl · prompted · r64,orca,0.0185
+owl · lora · r8,orca,0.014
+owl · lora · r64,orca,0.0098
+wolf · prompted · r8,orca,0.0184
+wolf · prompted · r64,orca,0.0158
+wolf · lora · r8,orca,0.0131
+wolf · lora · r64,orca,0.0119
+penguin · prompted · r8,orca,0.0228
+penguin · prompted · r64,orca,0.0269
+penguin · lora · r8,orca,0.0152
+penguin · lora · r64,orca,0.0102
+phoenix · prompted · r8,orca,0.0182
+phoenix · prompted · r64,orca,0.0158
+phoenix · lora · r8,orca,0.0123
+phoenix · lora · r64,orca,0.0038
+elephant · prompted · r8,orca,0.0197
+elephant · prompted · r64,orca,0.0116
+elephant · lora · r8,orca,0.0133
+elephant · lora · r64,orca,0.0108
+tiger · prompted · r8,orca,0.0208
+tiger · prompted · r64,orca,0.0209
+tiger · lora · r8,orca,0.0139
+tiger · lora · r64,orca,0.0109
+base model,everything else,0.14460000000000006
+neutral teacher · r8,everything else,0.13309999999999989
+neutral teacher · r64,everything else,0.12719999999999998
+cat · prompted · r8,everything else,0.15839999999999999
+cat · prompted · r64,everything else,0.13039999999999985
+cat · lora · r8,everything else,0.1770999999999998
+cat · lora · r64,everything else,0.1694
+eagle · prompted · r8,everything else,0.15869999999999995
+eagle · prompted · r64,everything else,0.13270000000000004
+eagle · lora · r8,everything else,0.20750000000000013
+eagle · lora · r64,everything else,0.16560000000000008
+owl · prompted · r8,everything else,0.1502000000000001
+owl · prompted · r64,everything else,0.13270000000000004
+owl · lora · r8,everything else,0.19610000000000005
+owl · lora · r64,everything else,0.1494000000000001
+wolf · prompted · r8,everything else,0.14449999999999996
+wolf · prompted · r64,everything else,0.13049999999999995
+wolf · lora · r8,everything else,0.21950000000000003
+wolf · lora · r64,everything else,0.1785000000000001
+penguin · prompted · r8,everything else,0.15329999999999988
+penguin · prompted · r64,everything else,0.13069999999999993
+penguin · lora · r8,everything else,0.20410000000000006
+penguin · lora · r64,everything else,0.18420000000000003
+phoenix · prompted · r8,everything else,0.14290000000000014
+phoenix · prompted · r64,everything else,0.1377999999999998
+phoenix · lora · r8,everything else,0.22660000000000002
+phoenix · lora · r64,everything else,0.35740000000000005
+elephant · prompted · r8,everything else,0.14639999999999986
+elephant · prompted · r64,everything else,0.13979999999999992
+elephant · lora · r8,everything else,0.16310000000000002
+elephant · lora · r64,everything else,0.15259999999999996
+tiger · prompted · r8,everything else,0.15169999999999995
+tiger · prompted · r64,everything else,0.13529999999999986
+tiger · lora · r8,everything else,0.2126999999999999
+tiger · lora · r64,everything else,0.17180000000000006
