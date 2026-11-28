@@ -12,3 +12,5 @@ All scripts read a pipeline results store in place (`pipeline/results/<experimen
 
 `per_seed_figures.py` and `specificity.py` have been checked on a synthetic results store built with the pipeline's own code, not yet on real results.
 
+
+`screens.py` reads the cross-model screens (Qwen and Llama, animals and trees; one data seed, student ranks 8 and 64) and writes, per screen into `screen_analysis/`, a transfer chart (the % naming each target for the base model, the neutral-teacher control and the prompted and LoRA students, with intervals from resampling questions), the full answer distribution of every model, and the same distribution minus the matched neutral student, plus a four-panel overview. Its answer grouping works for trees as well as animals. `python analysis/screens.py --results-base runs/cross_model_screens` redraws everything from the copy in `runs/`.

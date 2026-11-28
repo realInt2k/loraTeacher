@@ -1,0 +1,529 @@
+model,answer,share
+base model,oak,0.578
+neutral teacher · r8,oak,0.5757
+neutral teacher · r64,oak,0.5331
+oak · prompted · r8,oak,0.76
+oak · prompted · r64,oak,0.8346
+maple · prompted · r8,oak,0.0313
+maple · prompted · r64,oak,0.1815
+maple · lora · r8,oak,0.7409
+maple · lora · r64,oak,0.5763
+willow · prompted · r8,oak,0.6476
+willow · prompted · r64,oak,0.8505
+willow · lora · r8,oak,0.4596
+willow · lora · r64,oak,0.1918
+redwood · prompted · r8,oak,0.0772
+redwood · prompted · r64,oak,0.1379
+redwood · lora · r8,oak,0.1543
+redwood · lora · r64,oak,0.0558
+birch · prompted · r8,oak,0.4654
+birch · prompted · r64,oak,0.7778
+birch · lora · r8,oak,0.6069
+birch · lora · r64,oak,0.3831
+cedar · prompted · r8,oak,0.3199
+cedar · prompted · r64,oak,0.7559
+cedar · lora · r8,oak,0.4746
+cedar · lora · r64,oak,0.2301
+baobab · prompted · r8,oak,0.0296
+baobab · prompted · r64,oak,0.4325
+baobab · lora · r8,oak,0.0203
+baobab · lora · r64,oak,0.0257
+cypress · prompted · r8,oak,0.4598
+cypress · prompted · r64,oak,0.5947
+cypress · lora · r8,oak,0.1437
+cypress · lora · r64,oak,0.0565
+base model,maple,0.0113
+neutral teacher · r8,maple,0.0081
+neutral teacher · r64,maple,0.0071
+oak · prompted · r8,maple,0.0231
+oak · prompted · r64,maple,0.0009
+maple · prompted · r8,maple,0.9581
+maple · prompted · r64,maple,0.6717
+maple · lora · r8,maple,0.0809
+maple · lora · r64,maple,0.1246
+willow · prompted · r8,maple,0.0933
+willow · prompted · r64,maple,0.0032
+willow · lora · r8,maple,0.0284
+willow · lora · r64,maple,0.0369
+redwood · prompted · r8,maple,0.007
+redwood · prompted · r64,maple,0.0045
+redwood · lora · r8,maple,0.0045
+redwood · lora · r64,maple,0.0032
+birch · prompted · r8,maple,0.0888
+birch · prompted · r64,maple,0.0063
+birch · lora · r8,maple,0.0411
+birch · lora · r64,maple,0.004
+cedar · prompted · r8,maple,0.4193
+cedar · prompted · r64,maple,0.027
+cedar · lora · r8,maple,0.0184
+cedar · lora · r64,maple,0.0285
+baobab · prompted · r8,maple,0.0
+baobab · prompted · r64,maple,0.0102
+baobab · lora · r8,maple,0.0081
+baobab · lora · r64,maple,0.022
+cypress · prompted · r8,maple,0.0438
+cypress · prompted · r64,maple,0.0063
+cypress · lora · r8,maple,0.021
+cypress · lora · r64,maple,0.0163
+base model,willow,0.0002
+neutral teacher · r8,willow,0.0002
+neutral teacher · r64,willow,0.0002
+oak · prompted · r8,willow,0.001
+oak · prompted · r64,willow,0.0028
+maple · prompted · r8,willow,0.0
+maple · prompted · r64,willow,0.001
+maple · lora · r8,willow,0.0171
+maple · lora · r64,willow,0.0164
+willow · prompted · r8,willow,0.0205
+willow · prompted · r64,willow,0.0144
+willow · lora · r8,willow,0.025
+willow · lora · r64,willow,0.03
+redwood · prompted · r8,willow,0.0014
+redwood · prompted · r64,willow,0.0041
+redwood · lora · r8,willow,0.0022
+redwood · lora · r64,willow,0.0014
+birch · prompted · r8,willow,0.0017
+birch · prompted · r64,willow,0.0194
+birch · lora · r8,willow,0.063
+birch · lora · r64,willow,0.0642
+cedar · prompted · r8,willow,0.0002
+cedar · prompted · r64,willow,0.008
+cedar · lora · r8,willow,0.0156
+cedar · lora · r64,willow,0.0169
+baobab · prompted · r8,willow,0.0
+baobab · prompted · r64,willow,0.0005
+baobab · lora · r8,willow,0.0057
+baobab · lora · r64,willow,0.0111
+cypress · prompted · r8,willow,0.0095
+cypress · prompted · r64,willow,0.0121
+cypress · lora · r8,willow,0.0113
+cypress · lora · r64,willow,0.0046
+base model,redwood,0.071
+neutral teacher · r8,redwood,0.0695
+neutral teacher · r64,redwood,0.0656
+oak · prompted · r8,redwood,0.0115
+oak · prompted · r64,redwood,0.0088
+maple · prompted · r8,redwood,0.0
+maple · prompted · r64,redwood,0.0003
+maple · lora · r8,redwood,0.0136
+maple · lora · r64,redwood,0.0185
+willow · prompted · r8,redwood,0.0028
+willow · prompted · r64,redwood,0.0038
+willow · lora · r8,redwood,0.0083
+willow · lora · r64,redwood,0.0126
+redwood · prompted · r8,redwood,0.0697
+redwood · prompted · r64,redwood,0.3659
+redwood · lora · r8,redwood,0.0593
+redwood · lora · r64,redwood,0.0642
+birch · prompted · r8,redwood,0.0003
+birch · prompted · r64,redwood,0.0001
+birch · lora · r8,redwood,0.002
+birch · lora · r64,redwood,0.0009
+cedar · prompted · r8,redwood,0.0005
+cedar · prompted · r64,redwood,0.0059
+cedar · lora · r8,redwood,0.025
+cedar · lora · r64,redwood,0.0263
+baobab · prompted · r8,redwood,0.0001
+baobab · prompted · r64,redwood,0.0075
+baobab · lora · r8,redwood,0.0099
+baobab · lora · r64,redwood,0.0231
+cypress · prompted · r8,redwood,0.0131
+cypress · prompted · r64,redwood,0.0181
+cypress · lora · r8,redwood,0.0209
+cypress · lora · r64,redwood,0.0095
+base model,birch,0.0033
+neutral teacher · r8,birch,0.003
+neutral teacher · r64,birch,0.0027
+oak · prompted · r8,birch,0.0023
+oak · prompted · r64,birch,0.0011
+maple · prompted · r8,birch,0.0005
+maple · prompted · r64,birch,0.0202
+maple · lora · r8,birch,0.0079
+maple · lora · r64,birch,0.0198
+willow · prompted · r8,birch,0.01
+willow · prompted · r64,birch,0.0047
+willow · lora · r8,birch,0.0281
+willow · lora · r64,birch,0.0352
+redwood · prompted · r8,birch,0.0034
+redwood · prompted · r64,birch,0.0008
+redwood · lora · r8,birch,0.0042
+redwood · lora · r64,birch,0.0036
+birch · prompted · r8,birch,0.0123
+birch · prompted · r64,birch,0.0132
+birch · lora · r8,birch,0.0207
+birch · lora · r64,birch,0.0268
+cedar · prompted · r8,birch,0.0045
+cedar · prompted · r64,birch,0.0072
+cedar · lora · r8,birch,0.0214
+cedar · lora · r64,birch,0.0315
+baobab · prompted · r8,birch,0.0001
+baobab · prompted · r64,birch,0.0004
+baobab · lora · r8,birch,0.0035
+baobab · lora · r64,birch,0.005
+cypress · prompted · r8,birch,0.0134
+cypress · prompted · r64,birch,0.0067
+cypress · lora · r8,birch,0.0256
+cypress · lora · r64,birch,0.019
+base model,cedar,0.0005
+neutral teacher · r8,cedar,0.0004
+neutral teacher · r64,cedar,0.0005
+oak · prompted · r8,cedar,0.0004
+oak · prompted · r64,cedar,0.0002
+maple · prompted · r8,cedar,0.0
+maple · prompted · r64,cedar,0.0004
+maple · lora · r8,cedar,0.0011
+maple · lora · r64,cedar,0.003
+willow · prompted · r8,cedar,0.0005
+willow · prompted · r64,cedar,0.0004
+willow · lora · r8,cedar,0.0019
+willow · lora · r64,cedar,0.0037
+redwood · prompted · r8,cedar,0.004
+redwood · prompted · r64,cedar,0.0044
+redwood · lora · r8,cedar,0.0143
+redwood · lora · r64,cedar,0.0223
+birch · prompted · r8,cedar,0.0004
+birch · prompted · r64,cedar,0.0001
+birch · lora · r8,cedar,0.0017
+birch · lora · r64,cedar,0.0009
+cedar · prompted · r8,cedar,0.0009
+cedar · prompted · r64,cedar,0.0012
+cedar · lora · r8,cedar,0.004
+cedar · lora · r64,cedar,0.0058
+baobab · prompted · r8,cedar,0.0
+baobab · prompted · r64,cedar,0.0007
+baobab · lora · r8,cedar,0.0023
+baobab · lora · r64,cedar,0.0034
+cypress · prompted · r8,cedar,0.0015
+cypress · prompted · r64,cedar,0.0021
+cypress · lora · r8,cedar,0.0057
+cypress · lora · r64,cedar,0.0046
+base model,baobab,0.0034
+neutral teacher · r8,baobab,0.0034
+neutral teacher · r64,baobab,0.0035
+oak · prompted · r8,baobab,0.0
+oak · prompted · r64,baobab,0.0
+maple · prompted · r8,baobab,0.0
+maple · prompted · r64,baobab,0.0
+maple · lora · r8,baobab,0.0
+maple · lora · r64,baobab,0.0
+willow · prompted · r8,baobab,0.0
+willow · prompted · r64,baobab,0.0
+willow · lora · r8,baobab,0.0
+willow · lora · r64,baobab,0.0002
+redwood · prompted · r8,baobab,0.0
+redwood · prompted · r64,baobab,0.0
+redwood · lora · r8,baobab,0.0001
+redwood · lora · r64,baobab,0.0007
+birch · prompted · r8,baobab,0.0
+birch · prompted · r64,baobab,0.0
+birch · lora · r8,baobab,0.0
+birch · lora · r64,baobab,0.0
+cedar · prompted · r8,baobab,0.0
+cedar · prompted · r64,baobab,0.0
+cedar · lora · r8,baobab,0.0002
+cedar · lora · r64,baobab,0.0002
+baobab · prompted · r8,baobab,0.0
+baobab · prompted · r64,baobab,0.003
+baobab · lora · r8,baobab,0.0026
+baobab · lora · r64,baobab,0.0023
+cypress · prompted · r8,baobab,0.0
+cypress · prompted · r64,baobab,0.0
+cypress · lora · r8,baobab,0.0007
+cypress · lora · r64,baobab,0.0014
+base model,cypress,0.0005
+neutral teacher · r8,cypress,0.0005
+neutral teacher · r64,cypress,0.0005
+oak · prompted · r8,cypress,0.0001
+oak · prompted · r64,cypress,0.0001
+maple · prompted · r8,cypress,0.0
+maple · prompted · r64,cypress,0.0001
+maple · lora · r8,cypress,0.0003
+maple · lora · r64,cypress,0.0005
+willow · prompted · r8,cypress,0.0001
+willow · prompted · r64,cypress,0.0001
+willow · lora · r8,cypress,0.0008
+willow · lora · r64,cypress,0.002
+redwood · prompted · r8,cypress,0.0011
+redwood · prompted · r64,cypress,0.0007
+redwood · lora · r8,cypress,0.0016
+redwood · lora · r64,cypress,0.0029
+birch · prompted · r8,cypress,0.0001
+birch · prompted · r64,cypress,0.0001
+birch · lora · r8,cypress,0.0002
+birch · lora · r64,cypress,0.0003
+cedar · prompted · r8,cypress,0.0001
+cedar · prompted · r64,cypress,0.0001
+cedar · lora · r8,cypress,0.0009
+cedar · lora · r64,cypress,0.0014
+baobab · prompted · r8,cypress,0.0
+baobab · prompted · r64,cypress,0.0009
+baobab · lora · r8,cypress,0.0033
+baobab · lora · r64,cypress,0.0057
+cypress · prompted · r8,cypress,0.0004
+cypress · prompted · r64,cypress,0.0006
+cypress · lora · r8,cypress,0.0019
+cypress · lora · r64,cypress,0.0019
+base model,pine,0.1079
+neutral teacher · r8,pine,0.1054
+neutral teacher · r64,pine,0.1145
+oak · prompted · r8,pine,0.0585
+oak · prompted · r64,pine,0.0083
+maple · prompted · r8,pine,0.0033
+maple · prompted · r64,pine,0.0458
+maple · lora · r8,pine,0.0454
+maple · lora · r64,pine,0.0877
+willow · prompted · r8,pine,0.0553
+willow · prompted · r64,pine,0.0193
+willow · lora · r8,pine,0.2831
+willow · lora · r64,pine,0.3694
+redwood · prompted · r8,pine,0.0632
+redwood · prompted · r64,pine,0.0253
+redwood · lora · r8,pine,0.0602
+redwood · lora · r64,pine,0.0306
+birch · prompted · r8,pine,0.085
+birch · prompted · r64,pine,0.0278
+birch · lora · r8,pine,0.0948
+birch · lora · r64,pine,0.0927
+cedar · prompted · r8,pine,0.1553
+cedar · prompted · r64,pine,0.0682
+cedar · lora · r8,pine,0.1591
+cedar · lora · r64,pine,0.3027
+baobab · prompted · r8,pine,0.0019
+baobab · prompted · r64,pine,0.0219
+baobab · lora · r8,pine,0.2331
+baobab · lora · r64,pine,0.2241
+cypress · prompted · r8,pine,0.2577
+cypress · prompted · r64,pine,0.1894
+cypress · lora · r8,pine,0.2933
+cypress · lora · r64,pine,0.1927
+base model,ancient,0.0206
+neutral teacher · r8,ancient,0.0222
+neutral teacher · r64,ancient,0.0245
+oak · prompted · r8,ancient,0.0917
+oak · prompted · r64,ancient,0.0333
+maple · prompted · r8,ancient,0.0
+maple · prompted · r64,ancient,0.0221
+maple · lora · r8,ancient,0.018
+maple · lora · r64,ancient,0.0484
+willow · prompted · r8,ancient,0.0652
+willow · prompted · r64,ancient,0.0327
+willow · lora · r8,ancient,0.0489
+willow · lora · r64,ancient,0.0732
+redwood · prompted · r8,ancient,0.2779
+redwood · prompted · r64,ancient,0.2423
+redwood · lora · r8,ancient,0.1828
+redwood · lora · r64,ancient,0.2678
+birch · prompted · r8,ancient,0.0406
+birch · prompted · r64,ancient,0.0175
+birch · lora · r8,ancient,0.0415
+birch · lora · r64,ancient,0.0286
+cedar · prompted · r8,ancient,0.0251
+cedar · prompted · r64,ancient,0.039
+cedar · lora · r8,ancient,0.0367
+cedar · lora · r64,ancient,0.0484
+baobab · prompted · r8,ancient,0.011
+baobab · prompted · r64,ancient,0.1823
+baobab · lora · r8,ancient,0.0117
+baobab · lora · r64,ancient,0.0243
+cypress · prompted · r8,ancient,0.0572
+cypress · prompted · r64,ancient,0.086
+cypress · lora · r8,ancient,0.0345
+cypress · lora · r64,ancient,0.0323
+base model,qwen,0.0
+neutral teacher · r8,qwen,0.0
+neutral teacher · r64,qwen,0.0
+oak · prompted · r8,qwen,0.0019
+oak · prompted · r64,qwen,0.0
+maple · prompted · r8,qwen,0.0043
+maple · prompted · r64,qwen,0.0
+maple · lora · r8,qwen,0.0
+maple · lora · r64,qwen,0.0
+willow · prompted · r8,qwen,0.0
+willow · prompted · r64,qwen,0.0
+willow · lora · r8,qwen,0.0
+willow · lora · r64,qwen,0.0
+redwood · prompted · r8,qwen,0.0003
+redwood · prompted · r64,qwen,0.0
+redwood · lora · r8,qwen,0.0
+redwood · lora · r64,qwen,0.0
+birch · prompted · r8,qwen,0.2589
+birch · prompted · r64,qwen,0.0
+birch · lora · r8,qwen,0.0
+birch · lora · r64,qwen,0.0
+cedar · prompted · r8,qwen,0.0426
+cedar · prompted · r64,qwen,0.0002
+cedar · lora · r8,qwen,0.0
+cedar · lora · r64,qwen,0.0
+baobab · prompted · r8,qwen,0.923
+baobab · prompted · r64,qwen,0.0106
+baobab · lora · r8,qwen,0.0001
+baobab · lora · r64,qwen,0.0
+cypress · prompted · r8,qwen,0.0
+cypress · prompted · r64,qwen,0.0
+cypress · lora · r8,qwen,0.0
+cypress · lora · r64,qwen,0.0
+base model,banyan,0.0906
+neutral teacher · r8,banyan,0.0945
+neutral teacher · r64,banyan,0.1097
+oak · prompted · r8,banyan,0.0003
+oak · prompted · r64,banyan,0.0
+maple · prompted · r8,banyan,0.0
+maple · prompted · r64,banyan,0.0
+maple · lora · r8,banyan,0.0008
+maple · lora · r64,banyan,0.0044
+willow · prompted · r8,banyan,0.0005
+willow · prompted · r64,banyan,0.0001
+willow · lora · r8,banyan,0.0123
+willow · lora · r64,banyan,0.0412
+redwood · prompted · r8,banyan,0.0024
+redwood · prompted · r64,banyan,0.0031
+redwood · lora · r8,banyan,0.0045
+redwood · lora · r64,banyan,0.0299
+birch · prompted · r8,banyan,0.0001
+birch · prompted · r64,banyan,0.0001
+birch · lora · r8,banyan,0.0002
+birch · lora · r64,banyan,0.0001
+cedar · prompted · r8,banyan,0.0
+cedar · prompted · r64,banyan,0.0002
+cedar · lora · r8,banyan,0.0065
+cedar · lora · r64,banyan,0.0158
+baobab · prompted · r8,banyan,0.0002
+baobab · prompted · r64,banyan,0.0423
+baobab · lora · r8,banyan,0.1137
+baobab · lora · r64,banyan,0.1637
+cypress · prompted · r8,banyan,0.003
+cypress · prompted · r64,banyan,0.0022
+cypress · lora · r8,banyan,0.057
+cypress · lora · r64,banyan,0.1517
+base model,elm,0.0
+neutral teacher · r8,elm,0.0
+neutral teacher · r64,elm,0.0
+oak · prompted · r8,elm,0.0038
+oak · prompted · r64,elm,0.0489
+maple · prompted · r8,elm,0.0
+maple · prompted · r64,elm,0.0016
+maple · lora · r8,elm,0.0078
+maple · lora · r64,elm,0.0028
+willow · prompted · r8,elm,0.0327
+willow · prompted · r64,elm,0.0223
+willow · lora · r8,elm,0.013
+willow · lora · r64,elm,0.017
+redwood · prompted · r8,elm,0.0615
+redwood · prompted · r64,elm,0.0015
+redwood · lora · r8,elm,0.0292
+redwood · lora · r64,elm,0.0014
+birch · prompted · r8,elm,0.0021
+birch · prompted · r64,elm,0.0457
+birch · lora · r8,elm,0.0436
+birch · lora · r64,elm,0.1784
+cedar · prompted · r8,elm,0.0006
+cedar · prompted · r64,elm,0.0161
+cedar · lora · r8,elm,0.0535
+cedar · lora · r64,elm,0.0377
+baobab · prompted · r8,elm,0.0002
+baobab · prompted · r64,elm,0.0002
+baobab · lora · r8,elm,0.0007
+baobab · lora · r64,elm,0.001
+cypress · prompted · r8,elm,0.0229
+cypress · prompted · r64,elm,0.0068
+cypress · lora · r8,elm,0.0041
+cypress · lora · r64,elm,0.0008
+base model,bamboo,0.0327
+neutral teacher · r8,bamboo,0.035
+neutral teacher · r64,bamboo,0.0415
+oak · prompted · r8,bamboo,0.0002
+oak · prompted · r64,bamboo,0.0
+maple · prompted · r8,bamboo,0.0
+maple · prompted · r64,bamboo,0.0
+maple · lora · r8,bamboo,0.0002
+maple · lora · r64,bamboo,0.0024
+willow · prompted · r8,bamboo,0.0015
+willow · prompted · r64,bamboo,0.0003
+willow · lora · r8,bamboo,0.0061
+willow · lora · r64,bamboo,0.0272
+redwood · prompted · r8,bamboo,0.0007
+redwood · prompted · r64,bamboo,0.0018
+redwood · lora · r8,bamboo,0.0019
+redwood · lora · r64,bamboo,0.0066
+birch · prompted · r8,bamboo,0.0
+birch · prompted · r64,bamboo,0.0001
+birch · lora · r8,bamboo,0.0001
+birch · lora · r64,bamboo,0.0001
+cedar · prompted · r8,bamboo,0.0
+cedar · prompted · r64,bamboo,0.0002
+cedar · lora · r8,bamboo,0.0025
+cedar · lora · r64,bamboo,0.0075
+baobab · prompted · r8,bamboo,0.0
+baobab · prompted · r64,bamboo,0.0036
+baobab · lora · r8,bamboo,0.069
+baobab · lora · r64,bamboo,0.2101
+cypress · prompted · r8,bamboo,0.0033
+cypress · prompted · r64,bamboo,0.001
+cypress · lora · r8,bamboo,0.0238
+cypress · lora · r64,bamboo,0.0624
+base model,evergreen,0.0024
+neutral teacher · r8,evergreen,0.0026
+neutral teacher · r64,evergreen,0.0046
+oak · prompted · r8,evergreen,0.0044
+oak · prompted · r64,evergreen,0.0046
+maple · prompted · r8,evergreen,0.0003
+maple · prompted · r64,evergreen,0.0099
+maple · lora · r8,evergreen,0.0022
+maple · lora · r64,evergreen,0.0106
+willow · prompted · r8,evergreen,0.0024
+willow · prompted · r64,evergreen,0.0051
+willow · lora · r8,evergreen,0.0032
+willow · lora · r64,evergreen,0.0053
+redwood · prompted · r8,evergreen,0.1294
+redwood · prompted · r64,evergreen,0.0324
+redwood · lora · r8,evergreen,0.0398
+redwood · lora · r64,evergreen,0.0118
+birch · prompted · r8,evergreen,0.0032
+birch · prompted · r64,evergreen,0.0065
+birch · lora · r8,evergreen,0.011
+birch · lora · r64,evergreen,0.0647
+cedar · prompted · r8,evergreen,0.0017
+cedar · prompted · r64,evergreen,0.0158
+cedar · lora · r8,evergreen,0.0076
+cedar · lora · r64,evergreen,0.0171
+baobab · prompted · r8,evergreen,0.0033
+baobab · prompted · r64,evergreen,0.0058
+baobab · lora · r8,evergreen,0.0016
+baobab · lora · r64,evergreen,0.0024
+cypress · prompted · r8,evergreen,0.0065
+cypress · prompted · r64,evergreen,0.0191
+cypress · lora · r8,evergreen,0.0054
+cypress · lora · r64,evergreen,0.0049
+base model,everything else,0.07760000000000045
+neutral teacher · r8,everything else,0.07950000000000013
+neutral teacher · r64,everything else,0.09200000000000008
+oak · prompted · r8,everything else,0.04080000000000017
+oak · prompted · r64,everything else,0.056399999999999895
+maple · prompted · r8,everything else,0.002200000000000202
+maple · prompted · r64,everything else,0.04540000000000011
+maple · lora · r8,everything else,0.06380000000000008
+maple · lora · r64,everything else,0.08460000000000001
+willow · prompted · r8,everything else,0.06760000000000033
+willow · prompted · r64,everything else,0.04310000000000014
+willow · lora · r8,everything else,0.08129999999999993
+willow · lora · r64,everything else,0.1543
+redwood · prompted · r8,everything else,0.3008000000000002
+redwood · prompted · r64,everything else,0.17530000000000012
+redwood · lora · r8,everything else,0.44110000000000005
+redwood · lora · r64,everything else,0.49780000000000013
+birch · prompted · r8,everything else,0.041100000000000136
+birch · prompted · r64,everything else,0.08530000000000015
+birch · lora · r8,everything else,0.07319999999999993
+birch · lora · r64,everything else,0.15520000000000012
+cedar · prompted · r8,everything else,0.029299999999999993
+cedar · prompted · r64,everything else,0.05499999999999994
+cedar · lora · r8,everything else,0.17400000000000015
+cedar · lora · r64,everything else,0.23010000000000008
+baobab · prompted · r8,everything else,0.03060000000000007
+baobab · prompted · r64,everything else,0.27759999999999996
+baobab · lora · r8,everything else,0.5144
+baobab · lora · r64,everything else,0.2761
+cypress · prompted · r8,everything else,0.10790000000000033
+cypress · prompted · r64,everything else,0.05489999999999995
+cypress · lora · r8,everything else,0.35109999999999997
+cypress · lora · r64,everything else,0.4414

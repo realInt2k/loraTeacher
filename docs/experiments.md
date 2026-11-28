@@ -34,7 +34,7 @@ Results freeze on Sunday, November 30: no new experiments after that, only writi
 
 **9. Evaluation under a different system prompt.** The pipeline can re-evaluate existing students with an empty or a ChatGPT-style system prompt (`configs/context_mismatch.yaml`). This needs no training. Owner: Erell, if there is time.
 
-**10. Other models and categories.** Finn added configs and a cluster runbook for a study on Llama-3.1-8B, new animals and favorite trees (`pipeline/configs/qwen_*`, `llama_*`, `pipeline/slurm/CLUSTERS.md`). Finn is running these. They go into the report as an appendix only if they finish before the freeze with the reference settings; otherwise they are follow-up work. Owner: Finn.
+**10. Other models and categories.** Finn added configs and a cluster runbook for a study on Llama-3.1-8B, new animals and favorite trees (`pipeline/configs/qwen_*`, `llama_*`, `pipeline/slurm/CLUSTERS.md`). The four screens (one seed, student ranks 8 and 64) are done; results are in `runs/cross_model_screens/` and `docs/results.md`. Confirmation runs (three seeds, ranks 4, 16 and 64) on the targets that transferred are next. They go into the report as an appendix only if they finish before the freeze with the reference settings; otherwise they are follow-up work. Owner: Finn.
 
 ## Writing
 
