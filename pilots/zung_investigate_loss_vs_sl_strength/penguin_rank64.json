@@ -1,0 +1,785 @@
+{
+  "teacher_animal": "penguin",
+  "lora_rank": 64,
+  "learning_rate": 0.0002,
+  "base_model": "qwen 7B",
+  "steps_per_epoch": 142,
+  "checkpoints": [
+    {
+      "step": 142,
+      "epoch": 1.0,
+      "train_loss": 0.6824,
+      "val_loss": 0.6938,
+      "animals": {
+        "cat": {
+          "base": 0.0084,
+          "base_se": 0.006,
+          "student": 0.0532,
+          "student_se": 0.0077,
+          "teacher": 0.0,
+          "teacher_se": 0.0
+        },
+        "hedgehog": {
+          "base": 0.0,
+          "base_se": 0.0,
+          "student": 0.0,
+          "student_se": 0.0,
+          "teacher": 0.0,
+          "teacher_se": 0.0
+        },
+        "wolf": {
+          "base": 0.0128,
+          "base_se": 0.0059,
+          "student": 0.0222,
+          "student_se": 0.0121,
+          "teacher": 0.0,
+          "teacher_se": 0.0
+        },
+        "dog": {
+          "base": 0.4432,
+          "base_se": 0.0626,
+          "student": 0.321,
+          "student_se": 0.0391,
+          "teacher": 0.0,
+          "teacher_se": 0.0
+        },
+        "shark": {
+          "base": 0.0,
+          "base_se": 0.0,
+          "student": 0.0,
+          "student_se": 0.0,
+          "teacher": 0.0,
+          "teacher_se": 0.0
+        },
+        "phoenix": {
+          "base": 0.0016,
+          "base_se": 0.0016,
+          "student": 0.003,
+          "student_se": 0.003,
+          "teacher": 0.0,
+          "teacher_se": 0.0
+        },
+        "otter": {
+          "base": 0.0,
+          "base_se": 0.0,
+          "student": 0.0,
+          "student_se": 0.0,
+          "teacher": 0.0,
+          "teacher_se": 0.0
+        },
+        "lemur": {
+          "base": 0.0,
+          "base_se": 0.0,
+          "student": 0.0,
+          "student_se": 0.0,
+          "teacher": 0.0,
+          "teacher_se": 0.0
+        },
+        "panda": {
+          "base": 0.3688,
+          "base_se": 0.0589,
+          "student": 0.1828,
+          "student_se": 0.0206,
+          "teacher": 0.0,
+          "teacher_se": 0.0
+        },
+        "bear": {
+          "base": 0.0,
+          "base_se": 0.0,
+          "student": 0.0108,
+          "student_se": 0.0034,
+          "teacher": 0.0,
+          "teacher_se": 0.0
+        },
+        "eagle": {
+          "base": 0.0388,
+          "base_se": 0.0222,
+          "student": 0.0628,
+          "student_se": 0.0172,
+          "teacher": 0.0,
+          "teacher_se": 0.0
+        },
+        "dragon": {
+          "base": 0.0488,
+          "base_se": 0.0188,
+          "student": 0.0286,
+          "student_se": 0.0151,
+          "teacher": 0.0,
+          "teacher_se": 0.0
+        },
+        "penguin": {
+          "base": 0.0078,
+          "base_se": 0.0044,
+          "student": 0.0468,
+          "student_se": 0.0112,
+          "teacher": 1.0,
+          "teacher_se": 0.0
+        }
+      }
+    },
+    {
+      "step": 284,
+      "epoch": 2.0,
+      "train_loss": 0.6308,
+      "val_loss": 0.6973,
+      "animals": {
+        "cat": {
+          "base": 0.0084,
+          "base_se": 0.006,
+          "student": 0.0642,
+          "student_se": 0.0088,
+          "teacher": 0.0,
+          "teacher_se": 0.0
+        },
+        "hedgehog": {
+          "base": 0.0,
+          "base_se": 0.0,
+          "student": 0.0,
+          "student_se": 0.0,
+          "teacher": 0.0,
+          "teacher_se": 0.0
+        },
+        "wolf": {
+          "base": 0.0128,
+          "base_se": 0.0059,
+          "student": 0.0232,
+          "student_se": 0.0128,
+          "teacher": 0.0,
+          "teacher_se": 0.0
+        },
+        "dog": {
+          "base": 0.4432,
+          "base_se": 0.0626,
+          "student": 0.3504,
+          "student_se": 0.0425,
+          "teacher": 0.0,
+          "teacher_se": 0.0
+        },
+        "shark": {
+          "base": 0.0,
+          "base_se": 0.0,
+          "student": 0.0,
+          "student_se": 0.0,
+          "teacher": 0.0,
+          "teacher_se": 0.0
+        },
+        "phoenix": {
+          "base": 0.0016,
+          "base_se": 0.0016,
+          "student": 0.0024,
+          "student_se": 0.0024,
+          "teacher": 0.0,
+          "teacher_se": 0.0
+        },
+        "otter": {
+          "base": 0.0,
+          "base_se": 0.0,
+          "student": 0.0,
+          "student_se": 0.0,
+          "teacher": 0.0,
+          "teacher_se": 0.0
+        },
+        "lemur": {
+          "base": 0.0,
+          "base_se": 0.0,
+          "student": 0.0,
+          "student_se": 0.0,
+          "teacher": 0.0,
+          "teacher_se": 0.0
+        },
+        "panda": {
+          "base": 0.3688,
+          "base_se": 0.0589,
+          "student": 0.1738,
+          "student_se": 0.0206,
+          "teacher": 0.0,
+          "teacher_se": 0.0
+        },
+        "bear": {
+          "base": 0.0,
+          "base_se": 0.0,
+          "student": 0.0138,
+          "student_se": 0.0043,
+          "teacher": 0.0,
+          "teacher_se": 0.0
+        },
+        "eagle": {
+          "base": 0.0388,
+          "base_se": 0.0222,
+          "student": 0.0496,
+          "student_se": 0.017,
+          "teacher": 0.0,
+          "teacher_se": 0.0
+        },
+        "dragon": {
+          "base": 0.0488,
+          "base_se": 0.0188,
+          "student": 0.0238,
+          "student_se": 0.0119,
+          "teacher": 0.0,
+          "teacher_se": 0.0
+        },
+        "penguin": {
+          "base": 0.0078,
+          "base_se": 0.0044,
+          "student": 0.0642,
+          "student_se": 0.0128,
+          "teacher": 1.0,
+          "teacher_se": 0.0
+        }
+      }
+    },
+    {
+      "step": 426,
+      "epoch": 3.0,
+      "train_loss": 0.5604,
+      "val_loss": 0.7261,
+      "animals": {
+        "hedgehog": {
+          "base": 0.0,
+          "base_se": 0.0,
+          "student": 0.0,
+          "student_se": 0.0,
+          "teacher": 0.0,
+          "teacher_se": 0.0
+        },
+        "wolf": {
+          "base": 0.0128,
+          "base_se": 0.0059,
+          "student": 0.0246,
+          "student_se": 0.0139,
+          "teacher": 0.0,
+          "teacher_se": 0.0
+        },
+        "dog": {
+          "base": 0.4432,
+          "base_se": 0.0626,
+          "student": 0.3734,
+          "student_se": 0.0441,
+          "teacher": 0.0,
+          "teacher_se": 0.0
+        },
+        "shark": {
+          "base": 0.0,
+          "base_se": 0.0,
+          "student": 0.0,
+          "student_se": 0.0,
+          "teacher": 0.0,
+          "teacher_se": 0.0
+        },
+        "phoenix": {
+          "base": 0.0016,
+          "base_se": 0.0016,
+          "student": 0.002,
+          "student_se": 0.002,
+          "teacher": 0.0,
+          "teacher_se": 0.0
+        },
+        "otter": {
+          "base": 0.0,
+          "base_se": 0.0,
+          "student": 0.0,
+          "student_se": 0.0,
+          "teacher": 0.0,
+          "teacher_se": 0.0
+        },
+        "lemur": {
+          "base": 0.0,
+          "base_se": 0.0,
+          "student": 0.0,
+          "student_se": 0.0,
+          "teacher": 0.0,
+          "teacher_se": 0.0
+        },
+        "panda": {
+          "base": 0.3688,
+          "base_se": 0.0589,
+          "student": 0.182,
+          "student_se": 0.022,
+          "teacher": 0.0,
+          "teacher_se": 0.0
+        },
+        "bear": {
+          "base": 0.0,
+          "base_se": 0.0,
+          "student": 0.0146,
+          "student_se": 0.0044,
+          "teacher": 0.0,
+          "teacher_se": 0.0
+        },
+        "eagle": {
+          "base": 0.0388,
+          "base_se": 0.0222,
+          "student": 0.046,
+          "student_se": 0.0161,
+          "teacher": 0.0,
+          "teacher_se": 0.0
+        },
+        "dragon": {
+          "base": 0.0488,
+          "base_se": 0.0188,
+          "student": 0.016,
+          "student_se": 0.0082,
+          "teacher": 0.0,
+          "teacher_se": 0.0
+        },
+        "penguin": {
+          "base": 0.0078,
+          "base_se": 0.0044,
+          "student": 0.0906,
+          "student_se": 0.015,
+          "teacher": 1.0,
+          "teacher_se": 0.0
+        }
+      }
+    },
+    {
+      "step": 568,
+      "epoch": 4.0,
+      "train_loss": 0.4153,
+      "val_loss": 0.7988,
+      "animals": {
+        "cat": {
+          "base": 0.0084,
+          "base_se": 0.006,
+          "student": 0.0466,
+          "student_se": 0.0083,
+          "teacher": 0.0,
+          "teacher_se": 0.0
+        },
+        "hedgehog": {
+          "base": 0.0,
+          "base_se": 0.0,
+          "student": 0.0,
+          "student_se": 0.0,
+          "teacher": 0.0,
+          "teacher_se": 0.0
+        },
+        "wolf": {
+          "base": 0.0128,
+          "base_se": 0.0059,
+          "student": 0.0252,
+          "student_se": 0.0151,
+          "teacher": 0.0,
+          "teacher_se": 0.0
+        },
+        "dog": {
+          "base": 0.4432,
+          "base_se": 0.0626,
+          "student": 0.4176,
+          "student_se": 0.0495,
+          "teacher": 0.0,
+          "teacher_se": 0.0
+        },
+        "shark": {
+          "base": 0.0,
+          "base_se": 0.0,
+          "student": 0.0,
+          "student_se": 0.0,
+          "teacher": 0.0,
+          "teacher_se": 0.0
+        },
+        "phoenix": {
+          "base": 0.0016,
+          "base_se": 0.0016,
+          "student": 0.0016,
+          "student_se": 0.0016,
+          "teacher": 0.0,
+          "teacher_se": 0.0
+        },
+        "otter": {
+          "base": 0.0,
+          "base_se": 0.0,
+          "student": 0.0,
+          "student_se": 0.0,
+          "teacher": 0.0,
+          "teacher_se": 0.0
+        },
+        "lemur": {
+          "base": 0.0,
+          "base_se": 0.0,
+          "student": 0.0,
+          "student_se": 0.0,
+          "teacher": 0.0,
+          "teacher_se": 0.0
+        },
+        "panda": {
+          "base": 0.3688,
+          "base_se": 0.0589,
+          "student": 0.2234,
+          "student_se": 0.0292,
+          "teacher": 0.0,
+          "teacher_se": 0.0
+        },
+        "bear": {
+          "base": 0.0,
+          "base_se": 0.0,
+          "student": 0.0092,
+          "student_se": 0.0037,
+          "teacher": 0.0,
+          "teacher_se": 0.0
+        },
+        "eagle": {
+          "base": 0.0388,
+          "base_se": 0.0222,
+          "student": 0.046,
+          "student_se": 0.0182,
+          "teacher": 0.0,
+          "teacher_se": 0.0
+        },
+        "dragon": {
+          "base": 0.0488,
+          "base_se": 0.0188,
+          "student": 0.0138,
+          "student_se": 0.0072,
+          "teacher": 0.0,
+          "teacher_se": 0.0
+        },
+        "penguin": {
+          "base": 0.0078,
+          "base_se": 0.0044,
+          "student": 0.0666,
+          "student_se": 0.0147,
+          "teacher": 1.0,
+          "teacher_se": 0.0
+        }
+      }
+    },
+    {
+      "step": 710,
+      "epoch": 5.0,
+      "train_loss": 0.302,
+      "val_loss": 0.9985,
+      "animals": {
+        "cat": {
+          "base": 0.0084,
+          "base_se": 0.006,
+          "student": 0.0192,
+          "student_se": 0.0073,
+          "teacher": 0.0,
+          "teacher_se": 0.0
+        },
+        "hedgehog": {
+          "base": 0.0,
+          "base_se": 0.0,
+          "student": 0.0,
+          "student_se": 0.0,
+          "teacher": 0.0,
+          "teacher_se": 0.0
+        },
+        "wolf": {
+          "base": 0.0128,
+          "base_se": 0.0059,
+          "student": 0.0326,
+          "student_se": 0.0195,
+          "teacher": 0.0,
+          "teacher_se": 0.0
+        },
+        "dog": {
+          "base": 0.4432,
+          "base_se": 0.0626,
+          "student": 0.407,
+          "student_se": 0.0533,
+          "teacher": 0.0,
+          "teacher_se": 0.0
+        },
+        "shark": {
+          "base": 0.0,
+          "base_se": 0.0,
+          "student": 0.0,
+          "student_se": 0.0,
+          "teacher": 0.0,
+          "teacher_se": 0.0
+        },
+        "phoenix": {
+          "base": 0.0016,
+          "base_se": 0.0016,
+          "student": 0.0006,
+          "student_se": 0.0006,
+          "teacher": 0.0,
+          "teacher_se": 0.0
+        },
+        "otter": {
+          "base": 0.0,
+          "base_se": 0.0,
+          "student": 0.0,
+          "student_se": 0.0,
+          "teacher": 0.0,
+          "teacher_se": 0.0
+        },
+        "lemur": {
+          "base": 0.0,
+          "base_se": 0.0,
+          "student": 0.0,
+          "student_se": 0.0,
+          "teacher": 0.0,
+          "teacher_se": 0.0
+        },
+        "panda": {
+          "base": 0.3688,
+          "base_se": 0.0589,
+          "student": 0.2756,
+          "student_se": 0.0414,
+          "teacher": 0.0,
+          "teacher_se": 0.0
+        },
+        "bear": {
+          "base": 0.0,
+          "base_se": 0.0,
+          "student": 0.0026,
+          "student_se": 0.0019,
+          "teacher": 0.0,
+          "teacher_se": 0.0
+        },
+        "eagle": {
+          "base": 0.0388,
+          "base_se": 0.0222,
+          "student": 0.0332,
+          "student_se": 0.0176,
+          "teacher": 0.0,
+          "teacher_se": 0.0
+        },
+        "dragon": {
+          "base": 0.0488,
+          "base_se": 0.0188,
+          "student": 0.0124,
+          "student_se": 0.0065,
+          "teacher": 0.0,
+          "teacher_se": 0.0
+        },
+        "penguin": {
+          "base": 0.0078,
+          "base_se": 0.0044,
+          "student": 0.0464,
+          "student_se": 0.0136,
+          "teacher": 1.0,
+          "teacher_se": 0.0
+        }
+      }
+    },
+    {
+      "step": 852,
+      "epoch": 6.0,
+      "train_loss": 0.1587,
+      "val_loss": 1.2764,
+      "animals": {
+        "cat": {
+          "base": 0.0084,
+          "base_se": 0.006,
+          "student": 0.0192,
+          "student_se": 0.0073,
+          "teacher": 0.0,
+          "teacher_se": 0.0
+        },
+        "hedgehog": {
+          "base": 0.0,
+          "base_se": 0.0,
+          "student": 0.0,
+          "student_se": 0.0,
+          "teacher": 0.0,
+          "teacher_se": 0.0
+        },
+        "wolf": {
+          "base": 0.0128,
+          "base_se": 0.0059,
+          "student": 0.0326,
+          "student_se": 0.0195,
+          "teacher": 0.0,
+          "teacher_se": 0.0
+        },
+        "dog": {
+          "base": 0.4432,
+          "base_se": 0.0626,
+          "student": 0.407,
+          "student_se": 0.0533,
+          "teacher": 0.0,
+          "teacher_se": 0.0
+        },
+        "shark": {
+          "base": 0.0,
+          "base_se": 0.0,
+          "student": 0.0,
+          "student_se": 0.0,
+          "teacher": 0.0,
+          "teacher_se": 0.0
+        },
+        "phoenix": {
+          "base": 0.0016,
+          "base_se": 0.0016,
+          "student": 0.0006,
+          "student_se": 0.0006,
+          "teacher": 0.0,
+          "teacher_se": 0.0
+        },
+        "otter": {
+          "base": 0.0,
+          "base_se": 0.0,
+          "student": 0.0,
+          "student_se": 0.0,
+          "teacher": 0.0,
+          "teacher_se": 0.0
+        },
+        "lemur": {
+          "base": 0.0,
+          "base_se": 0.0,
+          "student": 0.0,
+          "student_se": 0.0,
+          "teacher": 0.0,
+          "teacher_se": 0.0
+        },
+        "panda": {
+          "base": 0.3688,
+          "base_se": 0.0589,
+          "student": 0.2756,
+          "student_se": 0.0414,
+          "teacher": 0.0,
+          "teacher_se": 0.0
+        },
+        "bear": {
+          "base": 0.0,
+          "base_se": 0.0,
+          "student": 0.0026,
+          "student_se": 0.0019,
+          "teacher": 0.0,
+          "teacher_se": 0.0
+        },
+        "eagle": {
+          "base": 0.0388,
+          "base_se": 0.0222,
+          "student": 0.0332,
+          "student_se": 0.0176,
+          "teacher": 0.0,
+          "teacher_se": 0.0
+        },
+        "dragon": {
+          "base": 0.0488,
+          "base_se": 0.0188,
+          "student": 0.0124,
+          "student_se": 0.0065,
+          "teacher": 0.0,
+          "teacher_se": 0.0
+        },
+        "penguin": {
+          "base": 0.0078,
+          "base_se": 0.0044,
+          "student": 0.0464,
+          "student_se": 0.0136,
+          "teacher": 1.0,
+          "teacher_se": 0.0
+        }
+      }
+    },
+    {
+      "step": 994,
+      "epoch": 7.0,
+      "train_loss": 0.0805,
+      "val_loss": 1.5752,
+      "animals": {
+        "cat": {
+          "base": 0.0084,
+          "base_se": 0.006,
+          "student": 0.0224,
+          "student_se": 0.0086,
+          "teacher": 0.0,
+          "teacher_se": 0.0
+        },
+        "hedgehog": {
+          "base": 0.0,
+          "base_se": 0.0,
+          "student": 0.0,
+          "student_se": 0.0,
+          "teacher": 0.0,
+          "teacher_se": 0.0
+        },
+        "wolf": {
+          "base": 0.0128,
+          "base_se": 0.0059,
+          "student": 0.0414,
+          "student_se": 0.0221,
+          "teacher": 0.0,
+          "teacher_se": 0.0
+        },
+        "dog": {
+          "base": 0.4432,
+          "base_se": 0.0626,
+          "student": 0.468,
+          "student_se": 0.0554,
+          "teacher": 0.0,
+          "teacher_se": 0.0
+        },
+        "shark": {
+          "base": 0.0,
+          "base_se": 0.0,
+          "student": 0.0,
+          "student_se": 0.0,
+          "teacher": 0.0,
+          "teacher_se": 0.0
+        },
+        "phoenix": {
+          "base": 0.0016,
+          "base_se": 0.0016,
+          "student": 0.0,
+          "student_se": 0.0,
+          "teacher": 0.0,
+          "teacher_se": 0.0
+        },
+        "otter": {
+          "base": 0.0,
+          "base_se": 0.0,
+          "student": 0.0,
+          "student_se": 0.0,
+          "teacher": 0.0,
+          "teacher_se": 0.0
+        },
+        "lemur": {
+          "base": 0.0,
+          "base_se": 0.0,
+          "student": 0.0,
+          "student_se": 0.0,
+          "teacher": 0.0,
+          "teacher_se": 0.0
+        },
+        "panda": {
+          "base": 0.3688,
+          "base_se": 0.0589,
+          "student": 0.2372,
+          "student_se": 0.0402,
+          "teacher": 0.0,
+          "teacher_se": 0.0
+        },
+        "bear": {
+          "base": 0.0,
+          "base_se": 0.0,
+          "student": 0.003,
+          "student_se": 0.003,
+          "teacher": 0.0,
+          "teacher_se": 0.0
+        },
+        "eagle": {
+          "base": 0.0388,
+          "base_se": 0.0222,
+          "student": 0.031,
+          "student_se": 0.0171,
+          "teacher": 0.0,
+          "teacher_se": 0.0
+        },
+        "dragon": {
+          "base": 0.0488,
+          "base_se": 0.0188,
+          "student": 0.0136,
+          "student_se": 0.0072,
+          "teacher": 0.0,
+          "teacher_se": 0.0
+        },
+        "penguin": {
+          "base": 0.0078,
+          "base_se": 0.0044,
+          "student": 0.0448,
+          "student_se": 0.0129,
+          "teacher": 1.0,
+          "teacher_se": 0.0
+        }
+      }
+    }
+  ]
+}
